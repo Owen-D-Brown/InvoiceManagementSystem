@@ -4,6 +4,7 @@
  */
 package guiapplication;
 import GuiComponents.MainFrame;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
 public class GuiApplication {
     public static MainFrame frame;
    // public static String url = "jdbc:sqlite:c:/database/database.db";
-     public static String url = "jdbc:sqlite:src/assets/database.db";
+     public static String url = "jdbc:sqlite:" + new File("Assets/database.db").getPath();
+
    
      //Main method of entire project
     public static void main(String[] args) throws SQLException, Exception {

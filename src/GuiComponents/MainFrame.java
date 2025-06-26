@@ -357,7 +357,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         InvoicePanelHeader.add(jButton4);
-        jButton4.setBounds(10, 10, 120, 23);
+        jButton4.setBounds(10, 10, 120, 25);
 
         jPanel3.setBackground(new java.awt.Color(255, 0, 5));
         jPanel3.setLayout(null);
@@ -367,11 +367,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Are You Sure You Want to Delete This Invoice?");
         jPanel5.add(jLabel1);
-        jLabel1.setBounds(60, 70, 280, 16);
+        jLabel1.setBounds(60, 70, 280, 19);
 
         jLabel2.setText("Warning");
         jPanel5.add(jLabel2);
-        jLabel2.setBounds(160, 30, 80, 16);
+        jLabel2.setBounds(160, 30, 80, 19);
 
         jButton9.setBackground(new java.awt.Color(102, 255, 0));
         jButton9.setText("Cancel");
@@ -435,19 +435,19 @@ public class MainFrame extends javax.swing.JFrame {
 
         streetAddress.setText("streetAddress");
         viewInvoicePanel.add(streetAddress);
-        streetAddress.setBounds(20, 250, 320, 16);
+        streetAddress.setBounds(20, 250, 320, 19);
 
         areaAddress.setText("areaAddress");
         viewInvoicePanel.add(areaAddress);
-        areaAddress.setBounds(20, 270, 320, 16);
+        areaAddress.setBounds(20, 270, 320, 19);
 
         eircode.setText("eircode");
         viewInvoicePanel.add(eircode);
-        eircode.setBounds(20, 310, 60, 16);
+        eircode.setBounds(20, 310, 60, 19);
 
         invoiceNoLabel.setText("Invoice Number:");
         viewInvoicePanel.add(invoiceNoLabel);
-        invoiceNoLabel.setBounds(470, 180, 110, 16);
+        invoiceNoLabel.setBounds(470, 180, 110, 19);
 
         invoiceNo.setText("Invoice No");
         viewInvoicePanel.add(invoiceNo);
@@ -455,15 +455,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         clientLabel.setText("Bill To:");
         viewInvoicePanel.add(clientLabel);
-        clientLabel.setBounds(20, 180, 110, 16);
+        clientLabel.setBounds(20, 180, 110, 19);
 
         invoiceDateLabel.setText("Invoice Date:");
         viewInvoicePanel.add(invoiceDateLabel);
-        invoiceDateLabel.setBounds(470, 200, 90, 16);
+        invoiceDateLabel.setBounds(470, 200, 90, 19);
 
         invoiceDate.setText("Invoice No");
         viewInvoicePanel.add(invoiceDate);
-        invoiceDate.setBounds(600, 200, 70, 16);
+        invoiceDate.setBounds(600, 200, 70, 19);
 
         invoicePONoLabel.setText("PO Number:");
         viewInvoicePanel.add(invoicePONoLabel);
@@ -471,7 +471,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         poNumber.setText("PO No");
         viewInvoicePanel.add(poNumber);
-        poNumber.setBounds(600, 220, 60, 16);
+        poNumber.setBounds(600, 220, 60, 19);
 
         invoiceDueDateLabel.setText("Invoice Due Date:");
         viewInvoicePanel.add(invoiceDueDateLabel);
@@ -479,7 +479,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         invoiceDueDate.setText("PO No");
         viewInvoicePanel.add(invoiceDueDate);
-        invoiceDueDate.setBounds(600, 240, 60, 16);
+        invoiceDueDate.setBounds(600, 240, 60, 19);
 
         jScrollPane2.setPreferredSize(new Dimension(587, ((jTable2.getRowCount()*jTable2.getRowHeight())+jTable2.getTableHeader().getHeight()))
         );
@@ -511,38 +511,38 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel24.setText("Cool Beans Cafe");
         viewInvoicePanel.add(jLabel24);
-        jLabel24.setBounds(30, 660, 100, 16);
+        jLabel24.setBounds(30, 660, 100, 19);
 
         jLabel25.setText("BIC:");
         viewInvoicePanel.add(jLabel25);
-        jLabel25.setBounds(30, 680, 40, 16);
+        jLabel25.setBounds(30, 680, 40, 19);
 
         jLabel26.setText("IBAN:");
         viewInvoicePanel.add(jLabel26);
-        jLabel26.setBounds(30, 710, 40, 16);
+        jLabel26.setBounds(30, 710, 40, 19);
 
         jLabel27.setText("ICBSIE2A");
         viewInvoicePanel.add(jLabel27);
-        jLabel27.setBounds(90, 680, 100, 16);
+        jLabel27.setBounds(90, 680, 100, 19);
 
         jLabel28.setText("IC34ICBS3884920348504932");
         viewInvoicePanel.add(jLabel28);
-        jLabel28.setBounds(90, 710, 160, 16);
+        jLabel28.setBounds(90, 710, 160, 19);
 
         jPanel7.setBackground(new java.awt.Color(44, 217, 82));
         jPanel7.setLayout(null);
 
         invoiceNoLabel10.setText("CoolBeansCafe@gmail.com");
         jPanel7.add(invoiceNoLabel10);
-        invoiceNoLabel10.setBounds(430, 100, 170, 16);
+        invoiceNoLabel10.setBounds(430, 100, 170, 19);
 
         invoiceNoLabel11.setText("083 478 5674");
         jPanel7.add(invoiceNoLabel11);
-        invoiceNoLabel11.setBounds(430, 80, 110, 16);
+        invoiceNoLabel11.setBounds(430, 80, 110, 19);
 
         invoiceNoLabel12.setText("Hailey Draw");
         jPanel7.add(invoiceNoLabel12);
-        invoiceNoLabel12.setBounds(430, 60, 110, 16);
+        invoiceNoLabel12.setBounds(430, 60, 110, 19);
 
         invoiceNoLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         invoiceNoLabel13.setText("COOL BEANS CAFE");
@@ -558,11 +558,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         countyAddress.setText("countyAddress");
         viewInvoicePanel.add(countyAddress);
-        countyAddress.setBounds(20, 290, 320, 16);
+        countyAddress.setBounds(20, 290, 320, 19);
 
         jLabel40.setText("Notes:");
         viewInvoicePanel.add(jLabel40);
-        jLabel40.setBounds(30, 510, 50, 16);
+        jLabel40.setBounds(30, 510, 50, 19);
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -638,15 +638,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         invoiceNoLabel14.setText("CoolBeansCafe@gmail.com");
         jPanel8.add(invoiceNoLabel14);
-        invoiceNoLabel14.setBounds(430, 100, 170, 16);
+        invoiceNoLabel14.setBounds(430, 100, 170, 19);
 
         invoiceNoLabel15.setText("083 478 5674");
         jPanel8.add(invoiceNoLabel15);
-        invoiceNoLabel15.setBounds(430, 80, 110, 16);
+        invoiceNoLabel15.setBounds(430, 80, 110, 19);
 
         invoiceNoLabel16.setText("Hailey Draw");
         jPanel8.add(invoiceNoLabel16);
-        invoiceNoLabel16.setBounds(430, 60, 110, 16);
+        invoiceNoLabel16.setBounds(430, 60, 110, 19);
 
         invoiceNoLabel17.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         invoiceNoLabel17.setText("COOL BEANS CAFE");
@@ -662,7 +662,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         clientLabel2.setText("Bill To:");
         addInvoicePanel.add(clientLabel2);
-        clientLabel2.setBounds(20, 180, 110, 16);
+        clientLabel2.setBounds(20, 180, 110, 19);
 
         addContactCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         addContactCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -676,7 +676,7 @@ public class MainFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
         addInvoicePanel.add(addContactCombo);
-        addContactCombo.setBounds(20, 200, 130, 22);
+        addContactCombo.setBounds(20, 200, 130, 25);
 
         addClientCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         addClientCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -685,7 +685,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         addInvoicePanel.add(addClientCombo);
-        addClientCombo.setBounds(20, 230, 130, 22);
+        addClientCombo.setBounds(20, 230, 130, 25);
         try {
             addClientCombo.setModel(new DefaultComboBoxModel(GuiApplication.getClients()));
         } catch (SQLException e) {
@@ -753,7 +753,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         addInvoicePanel.add(jButton11);
-        jButton11.setBounds(550, 470, 110, 23);
+        jButton11.setBounds(550, 470, 110, 25);
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
@@ -764,7 +764,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel29.setText("Notes:");
         addInvoicePanel.add(jLabel29);
-        jLabel29.setBounds(30, 510, 50, 16);
+        jLabel29.setBounds(30, 510, 50, 19);
 
         jLabel30.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel30.setText("PAYMENT DETAILS:");
@@ -778,23 +778,23 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel32.setText("Cool Beans Cafe");
         addInvoicePanel.add(jLabel32);
-        jLabel32.setBounds(30, 660, 100, 16);
+        jLabel32.setBounds(30, 660, 100, 19);
 
         jLabel33.setText("BIC:");
         addInvoicePanel.add(jLabel33);
-        jLabel33.setBounds(30, 680, 40, 16);
+        jLabel33.setBounds(30, 680, 40, 19);
 
         jLabel34.setText("IBAN:");
         addInvoicePanel.add(jLabel34);
-        jLabel34.setBounds(30, 710, 40, 16);
+        jLabel34.setBounds(30, 710, 40, 19);
 
         jLabel35.setText("IC34ICBS3884920348504932");
         addInvoicePanel.add(jLabel35);
-        jLabel35.setBounds(90, 710, 160, 16);
+        jLabel35.setBounds(90, 710, 160, 19);
 
         jLabel36.setText("ICBSIE2A");
         addInvoicePanel.add(jLabel36);
-        jLabel36.setBounds(90, 680, 100, 16);
+        jLabel36.setBounds(90, 680, 100, 19);
 
         jLabel37.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel37.setText("TERMS AND CONDITIONS:");
@@ -864,27 +864,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         invoiceDateLabel2.setText("Invoice Date:");
         addInvoicePanel.add(invoiceDateLabel2);
-        invoiceDateLabel2.setBounds(480, 200, 90, 16);
+        invoiceDateLabel2.setBounds(480, 200, 90, 19);
 
         invoiceNoLabel18.setText("Invoice Number:");
         addInvoicePanel.add(invoiceNoLabel18);
-        invoiceNoLabel18.setBounds(480, 180, 110, 16);
+        invoiceNoLabel18.setBounds(480, 180, 110, 19);
 
         addDate.setText(null);
         addDate.setToolTipText("Please enter \"dd/mm/yyyy\" format");
         addDate.setDocument(new JTextFieldLimit(10));
         addInvoicePanel.add(addDate);
-        addDate.setBounds(590, 200, 85, 20);
+        addDate.setBounds(590, 200, 102, 20);
 
         addInvoiceNo.setText(Integer.toString(Integer.parseInt(jTable1.getValueAt(jTable1.getRowCount() - 1, 0).toString()) + 1));
         addInvoicePanel.add(addInvoiceNo);
-        addInvoiceNo.setBounds(590, 180, 80, 16);
+        addInvoiceNo.setBounds(590, 180, 80, 19);
 
         addDueDate.setText(null);
         addDueDate.setToolTipText("Please enter \"dd/mm/yyyy\" format");
         addDueDate.setDocument(new JTextFieldLimit(10));
         addInvoicePanel.add(addDueDate);
-        addDueDate.setBounds(590, 240, 85, 20);
+        addDueDate.setBounds(590, 240, 102, 20);
 
         jButton12.setText("Save Invoice");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -893,7 +893,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         addInvoicePanel.add(jButton12);
-        jButton12.setBounds(540, 890, 130, 23);
+        jButton12.setBounds(540, 890, 130, 25);
 
         jPanel2.add(addInvoicePanel, "addInvoice");
 
@@ -901,19 +901,19 @@ public class MainFrame extends javax.swing.JFrame {
 
         invoiceNoLabel5.setText("Invoice Number:");
         editInvoicePanel.add(invoiceNoLabel5);
-        invoiceNoLabel5.setBounds(480, 180, 110, 16);
+        invoiceNoLabel5.setBounds(480, 180, 110, 19);
 
         clientLabel1.setText("Bill To:");
         editInvoicePanel.add(clientLabel1);
-        clientLabel1.setBounds(20, 180, 110, 16);
+        clientLabel1.setBounds(20, 180, 110, 19);
 
         invoiceDateLabel1.setText("Invoice Date:");
         editInvoicePanel.add(invoiceDateLabel1);
-        invoiceDateLabel1.setBounds(480, 200, 90, 16);
+        invoiceDateLabel1.setBounds(480, 200, 90, 19);
 
         editInvoiceNo.setText(invoiceNo.getText());
         editInvoicePanel.add(editInvoiceNo);
-        editInvoiceNo.setBounds(590, 180, 80, 16);
+        editInvoiceNo.setBounds(590, 180, 80, 19);
 
         invoicePONoLabel1.setText("PO Number:");
         editInvoicePanel.add(invoicePONoLabel1);
@@ -946,15 +946,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         invoiceNoLabel6.setText("CoolBeansCafe@gmail.com");
         jPanel6.add(invoiceNoLabel6);
-        invoiceNoLabel6.setBounds(430, 100, 170, 16);
+        invoiceNoLabel6.setBounds(430, 100, 170, 19);
 
         invoiceNoLabel9.setText("083 478 5674");
         jPanel6.add(invoiceNoLabel9);
-        invoiceNoLabel9.setBounds(430, 80, 110, 16);
+        invoiceNoLabel9.setBounds(430, 80, 110, 19);
 
         invoiceNoLabel8.setText("Hailey Draw");
         jPanel6.add(invoiceNoLabel8);
-        invoiceNoLabel8.setBounds(430, 60, 110, 16);
+        invoiceNoLabel8.setBounds(430, 60, 110, 19);
 
         invoiceNoLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         invoiceNoLabel7.setText("COOL BEANS CAFE");
@@ -972,17 +972,17 @@ public class MainFrame extends javax.swing.JFrame {
         editDueDate.setToolTipText("Please enter a date in the format \"dd/mm/yyyy\"");
         editDueDate.setDocument(new JTextFieldLimit(10));
         editInvoicePanel.add(editDueDate);
-        editDueDate.setBounds(590, 240, 85, 20);
+        editDueDate.setBounds(590, 240, 102, 20);
 
         editDate.setText(invoiceDate.getText());
         editDate.setToolTipText("Please enter a date in the format \"dd/mm/yyyy\"");
         editDate.setDocument(new JTextFieldLimit(10));
         editInvoicePanel.add(editDate);
-        editDate.setBounds(590, 200, 85, 20);
+        editDate.setBounds(590, 200, 102, 20);
 
         PONumberCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         editInvoicePanel.add(PONumberCombo);
-        PONumberCombo.setBounds(590, 220, 85, 22);
+        PONumberCombo.setBounds(590, 220, 85, 25);
 
         contactCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         contactCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -991,7 +991,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         editInvoicePanel.add(contactCombo);
-        contactCombo.setBounds(20, 200, 130, 22);
+        contactCombo.setBounds(20, 200, 130, 25);
 
         clientCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         clientCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -1000,7 +1000,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         editInvoicePanel.add(clientCombo);
-        clientCombo.setBounds(20, 230, 130, 22);
+        clientCombo.setBounds(20, 230, 130, 25);
 
         clientAddressCombo.setModel(new  DefaultComboBoxModel(new String[0]));
         clientAddressCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -1020,7 +1020,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Notes:");
         editInvoicePanel.add(jLabel3);
-        jLabel3.setBounds(30, 510, 50, 16);
+        jLabel3.setBounds(30, 510, 50, 19);
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel4.setText("CANCELLATION POLICY");
@@ -1035,23 +1035,23 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel6.setText("IBAN:");
         editInvoicePanel.add(jLabel6);
-        jLabel6.setBounds(30, 710, 40, 16);
+        jLabel6.setBounds(30, 710, 40, 19);
 
         jLabel7.setText("IC34ICBS3884920348504932");
         editInvoicePanel.add(jLabel7);
-        jLabel7.setBounds(90, 710, 160, 16);
+        jLabel7.setBounds(90, 710, 160, 19);
 
         jLabel8.setText("BIC:");
         editInvoicePanel.add(jLabel8);
-        jLabel8.setBounds(30, 680, 40, 16);
+        jLabel8.setBounds(30, 680, 40, 19);
 
         jLabel10.setText("ICBSIE2A");
         editInvoicePanel.add(jLabel10);
-        jLabel10.setBounds(90, 680, 100, 16);
+        jLabel10.setBounds(90, 680, 100, 19);
 
         jLabel11.setText("Cool Beans Cafe");
         editInvoicePanel.add(jLabel11);
-        jLabel11.setBounds(30, 660, 100, 16);
+        jLabel11.setBounds(30, 660, 100, 19);
 
         jLabel12.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel12.setText("PAYMENT DETAILS:");
@@ -1117,7 +1117,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         editInvoicePanel.add(jButton8);
-        jButton8.setBounds(550, 710, 120, 23);
+        jButton8.setBounds(550, 710, 120, 25);
 
         jButton6.setText("Delete Row");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -1126,7 +1126,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         editInvoicePanel.add(jButton6);
-        jButton6.setBounds(550, 680, 120, 23);
+        jButton6.setBounds(550, 680, 120, 25);
 
         jButton5.setText("Add Row");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -1135,7 +1135,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         editInvoicePanel.add(jButton5);
-        jButton5.setBounds(550, 650, 120, 23);
+        jButton5.setBounds(550, 650, 120, 25);
 
         jButton7.setText("Reset Changes");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -1144,7 +1144,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         editInvoicePanel.add(jButton7);
-        jButton7.setBounds(550, 330, 120, 23);
+        jButton7.setBounds(550, 330, 120, 25);
 
         jPanel2.add(editInvoicePanel, "editInvoice");
 
