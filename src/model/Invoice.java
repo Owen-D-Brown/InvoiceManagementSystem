@@ -40,10 +40,6 @@ public class Invoice {
         return invoiceNumber;
     }
 
-    public void setInvoiceNumber(int invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
-    }
-
     public Date getInvoiceDate() {
         return invoiceDate;
     }
