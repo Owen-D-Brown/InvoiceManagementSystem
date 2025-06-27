@@ -5,6 +5,7 @@
 package dto;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Client;
@@ -20,7 +21,7 @@ import model.PONumber;
 public class FullInvoiceDTO {
     
     private Invoice invoice;
-    private Client client;
+    private FullClientDTO client;
     private Contact contact;
     private List<InvoiceDetail> invoiceDetails;
     //private PONumber poNumber;
@@ -85,13 +86,13 @@ public class FullInvoiceDTO {
     }
 
     //Client
-    public Client getClient() {
+    public FullClientDTO getClient() {
         return this.client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(FullClientDTO client) {
         this.client = client;
-        invoice.setClientID(client.getClientID());
+        invoice.setClientID(client.getClient().getClientID());
     }
 
     //Contact
@@ -105,14 +106,18 @@ public class FullInvoiceDTO {
         invoice.setContactID(contact.getContactID());
     }
     
-    public void updateInvoiceDetail(InvoiceDetail invoiceDetail) {
-        for(int i = 0; i<invoiceDetails.size(); i++) {
-            if(invoiceDetails.get(i).getDetailID() != invoiceDetail.getDetailID()) {
-                
-            } else {
-                invoiceDetails.set(i, invoiceDetail);
-                return;
-            }
-        }
+    public void updateInvoiceDetail(List<InvoiceDetail> invoiceDetails) {
+        this.invoiceDetails = invoiceDetails;
     }
+    
+    public List<InvoiceDetail> getInvoiceDetails() {
+        return this.invoiceDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "FullInvoiceDTO{" + "invoice=" + invoice + ", client=" + client + ", contact=" + contact + ", invoiceDetails=" + invoiceDetails + '}';
+    }
+ 
+    
 }
