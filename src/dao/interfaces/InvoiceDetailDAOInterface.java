@@ -4,12 +4,13 @@
  */
 package dao.interfaces;
 
+import java.util.ArrayList;
 import model.InvoiceDetail;
 
 /**
  *
  * @author Owen
  */
-public interface InvoiceDetailDAOInterface extends BaseDAOInterface {
-    InvoiceDetail getByInvoiceNumber(int number);
+public interface InvoiceDetailDAOInterface extends BaseDAOInterface<InvoiceDetail> {
+    ArrayList<InvoiceDetail> getByInvoiceNumber(int number);
 }
