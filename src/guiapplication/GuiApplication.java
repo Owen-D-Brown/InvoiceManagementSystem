@@ -23,6 +23,7 @@ public class GuiApplication {
      //Main method of entire project
     public static void main(String[] args) throws SQLException, Exception {
  
+        
         //Setting up Frame
     frame = new MainFrame();
     frame.setVisible(true);

@@ -4,12 +4,14 @@
  */
 package dao.interfaces;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.ClientAddress;
 
 /**
  *
  * @author Owen
  */
-public interface ClientAddressDAOInterface extends BaseDAOInterface {
-    ClientAddress getByClientId(int id);
+public interface ClientAddressDAOInterface extends BaseDAOInterface<ClientAddress> {
+    ArrayList<ClientAddress> getByClientId(int id);
 }

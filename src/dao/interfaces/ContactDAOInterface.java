@@ -4,13 +4,15 @@
  */
 package dao.interfaces;
 
+import java.util.ArrayList;
 import model.Contact;
 
 /**
  *
  * @author Owen
  */
-public interface ContactDAOInterface {
-    Contact getByClientId(int id);
+public interface ContactDAOInterface extends BaseDAOInterface<Contact> {
+    ArrayList<Contact> getByClientId(int id);
+   
     Contact getByName(String name);
 }

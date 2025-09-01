@@ -10,7 +10,7 @@ import model.Client;
  *
  * @author Owen
  */
-public interface ClientDAOInterface extends BaseDAOInterface {
+public interface ClientDAOInterface extends BaseDAOInterface<Client> {
     Client getByName(String name);
     Client getByNumber(int number);
 }

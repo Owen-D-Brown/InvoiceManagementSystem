@@ -10,6 +10,6 @@ import model.InvoiceDetail;
  *
  * @author Owen
  */
-public interface InvoiceDetailDAOInterface {
+public interface InvoiceDetailDAOInterface extends BaseDAOInterface {
     InvoiceDetail getByInvoiceNumber(int number);
 }

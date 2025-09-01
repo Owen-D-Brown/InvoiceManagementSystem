@@ -4,10 +4,12 @@
  */
 package dao.interfaces;
 
+import model.Invoice;
+
 /**
  *
  * @author Owen
  */
-public interface InvoiceDAOInterface extends BaseDAOInterface {
+public interface InvoiceDAOInterface extends BaseDAOInterface<Invoice> {
     
 }

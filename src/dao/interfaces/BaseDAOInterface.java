@@ -10,10 +10,10 @@ import java.util.List;
  *
  * @author Owen
  */
-public interface BaseDAOInterface {
+public interface BaseDAOInterface<T> {
     
-    Object getById(int id);
-    List<Object> getAll();
+    T getById(int id);
+    List<T> getAll();
     boolean insert(Object t);
     boolean update(Object t);
     boolean delete(int id);
