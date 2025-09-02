@@ -9,6 +9,7 @@ import java.util.List;
 import model.Client;
 import util.DatabasePipeline;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -107,6 +108,28 @@ public class ClientDAO implements ClientDAOInterface {
 
     @Override
     public List<Client> getAll() {
+try (
+            java.sql.Connection conn = DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Clients")
+        ) {
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Client> cs = new ArrayList<>();//this wont handle when its a bad search it returns empty array not null
+            while(rs.next()) {
+                int id = rs.getInt("ClientID");
+                String cName = rs.getString("ClientName");
+                String email = rs.getString("ClientEmail");
+                String number = Integer.toString(rs.getInt("ClientNumber"));
+                String website = rs.getString("ClientWebsite");
+                cs.add(new Client(id, cName, email, number, website));
+                
+            } 
+            return cs;
+        } 
+        
+        catch (SQLException ex) {
+            System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        }
         return null;
     }
 

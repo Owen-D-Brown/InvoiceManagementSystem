@@ -10,7 +10,7 @@ import model.MenuItem;
  *
  * @author Owen
  */
-public interface MenuDAOInterface extends BaseDAOInterface {
+public interface MenuDAOInterface extends BaseDAOInterface<MenuItem> {
     MenuItem getByName(String name);
     
 }

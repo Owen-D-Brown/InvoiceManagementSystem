@@ -51,12 +51,61 @@ public class InvoiceDetailDAO implements InvoiceDetailDAOInterface {
 
     @Override
     public InvoiceDetail getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+         try (
+            java.sql.Connection conn = DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM InvoiceDetails WHERE DetailID = ?")
+        ) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()) {
+                int detailID = rs.getInt("DetailID");
+                int invoiceNumber = rs.getInt("InvoiceNumber");
+                int itemID = rs.getInt("ItemID");
+                int quantity = rs.getInt("ItemQuantity");
+
+                InvoiceDetail detail = new InvoiceDetail(detailID, invoiceNumber, itemID, quantity);
+                return detail;
+        } else {
+                return null;
+            }
+            
+         
+        } 
+        
+        catch (SQLException ex) {
+            System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        }
+        return null;            }
 
     @Override
     public List<InvoiceDetail> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         try (
+            java.sql.Connection conn = DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM InvoiceDetails")
+        ) {
+            
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
+            while(rs.next()) {
+                int detailID = rs.getInt("DetailID");
+                int invoiceNumber = rs.getInt("InvoiceNumber");
+                int itemID = rs.getInt("ItemID");
+                int quantity = rs.getInt("ItemQuantity");
+
+                InvoiceDetail detail = new InvoiceDetail(detailID, invoiceNumber, itemID, quantity);
+                invoiceDetails.add(detail);
+        }
+            
+            return invoiceDetails;
+        } 
+        
+        catch (SQLException ex) {
+            System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        }
+        return null;           
     }
 
     @Override

@@ -83,15 +83,63 @@ public class ContactDAO implements ContactDAOInterface {
     }
 
     @Override
-    public Contact getByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public Contact getByFirstName(String name) {
+   try (
+            java.sql.Connection conn = DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Contacts WHERE ContactFirstName = ?")
+        ) {
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                int contactID = rs.getInt("ContactID");
+                int clientID = rs.getInt("ClientID");
+                String firstName = rs.getString("ContactFirstName");
+                String lastName = rs.getString("ContactLastName");
+                String number = rs.getString("ContactNumber");
+                String email = rs.getString("ContactEmail");
+                return new Contact(contactID, clientID, firstName, lastName, number, email);
+               
+            } else {
+                //throw error no client found;
+                return null;
+            }
+        } 
+        
+        catch (SQLException ex) {
+            System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        }
+        return null;       }
 
   
 
     @Override
     public List<Contact> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+ try (
+            java.sql.Connection conn = DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Contacts")
+        ) {
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Contact> c = new ArrayList<>();
+            while(rs.next()) {
+                int contactID = rs.getInt("ContactID");
+                int clientID = rs.getInt("ClientID");
+                String firstName = rs.getString("ContactFirstName");
+                String lastName = rs.getString("ContactLastName");
+                String number = rs.getString("ContactNumber");
+                String email = rs.getString("ContactEmail");
+                Contact co = new Contact(contactID, clientID, firstName, lastName, number, email);
+                c.add(co);
+        }
+            
+            return c;
+        } 
+        
+        catch (SQLException ex) {
+            System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        }
+        return null;        
     }
 
     @Override

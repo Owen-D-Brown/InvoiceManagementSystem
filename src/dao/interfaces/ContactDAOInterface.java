@@ -14,5 +14,5 @@ import model.Contact;
 public interface ContactDAOInterface extends BaseDAOInterface<Contact> {
     ArrayList<Contact> getByClientId(int id);
    
-    Contact getByName(String name);
+    Contact getByFirstName(String name);
 }

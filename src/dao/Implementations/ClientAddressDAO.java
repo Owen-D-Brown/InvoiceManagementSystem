@@ -54,13 +54,63 @@ public class ClientAddressDAO implements ClientAddressDAOInterface {
 
     @Override
     public ClientAddress getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try (
+                 java.sql.Connection conn = DatabasePipeline.openConnection();
+                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClientAddresses WHERE AddressID = ?")
+            ) {
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                while(rs.next()) {
+                    int cId = rs.getInt("AddressID");
+                    int clientID = rs.getInt("ClientID");
+                    String streetAddress = rs.getString("StreetAddress");
+                    String areaAddress = rs.getString("AreaAddress");
+                    String county = rs.getString("ClientCounty");
+                    String eircode = rs.getString("ClientEircode");
+                    String printAddress = rs.getString("ClientPrintAddress");
+                    ClientAddress c = new ClientAddress(cId, clientID, streetAddress, areaAddress, county, eircode, printAddress);
+                    return c;
+               }
+            
+           
+                }    
+        
+        catch (SQLException ex) {
+            System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        }
+        return null;        
     }
 
     @Override
     public List<ClientAddress> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        try (
+            java.sql.Connection conn = DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClientAddresses")
+        ) {
+            
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<ClientAddress> ca = new ArrayList<>();
+            while(rs.next()) {
+                int cId = rs.getInt("AddressID");
+                int clientID = rs.getInt("ClientID");
+                String streetAddress = rs.getString("StreetAddress");
+                String areaAddress = rs.getString("AreaAddress");
+                String county = rs.getString("ClientCounty");
+                String eircode = rs.getString("ClientEircode");
+                String printAddress = rs.getString("ClientPrintAddress");
+                ClientAddress c = new ClientAddress(cId, clientID, streetAddress, areaAddress, county, eircode, printAddress);
+                ca.add(c);
+        }
+            
+            return ca;
+        } 
+        
+        catch (SQLException ex) {
+            System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+        }
+        return null;        }
 
     @Override
     public boolean insert(Object t) {

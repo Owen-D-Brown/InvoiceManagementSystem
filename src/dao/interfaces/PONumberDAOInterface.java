@@ -4,13 +4,14 @@
  */
 package dao.interfaces;
 
+import java.util.List;
 import model.PONumber;
 
 /**
  *
  * @author Owen
  */
-public interface PONumberDAOInterface extends BaseDAOInterface {
-    PONumber getByContactId(int id);
+public interface PONumberDAOInterface extends BaseDAOInterface<PONumber> {
+    List<PONumber> getByContactId(int id);
     
 }

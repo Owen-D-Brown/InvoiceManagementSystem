@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Contact;
@@ -71,7 +72,46 @@ public class InvoiceDAO implements InvoiceDAOInterface {
 
     @Override
     public List<Invoice> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+try (
+            java.sql.Connection conn = DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Invoices")
+        ) {
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Invoice> is = new ArrayList<>();
+            while(rs.next()) {
+                int invoiceNumber = rs.getInt("InvoiceNumber");
+                String rawInvoiceDate = rs.getString("InvoiceDate");
+                String rawDueDate = rs.getString("InvoiceDueDate");
+                String rawBookingDate = rs.getString("InvoiceBookingDate");
+                Date invoiceDate = DB_DATE_FORMAT.parse(rawInvoiceDate);
+                Date invoiceDueDate = DB_DATE_FORMAT.parse(rawDueDate);
+                Date invoiceBookingDate = DB_DATE_FORMAT.parse(rawBookingDate);
+                float subtotal = rs.getFloat("InvoiceSubtotal");
+                boolean paid = rs.getBoolean("InvoicePaid");
+                String notes = rs.getString("InvoiceNotes");
+                int clientId = rs.getInt("ClientID");
+                int contactId = rs.getInt("ContactID");
+
+                Invoice i = new Invoice(
+                    invoiceNumber,
+                    invoiceDate,
+                    invoiceDueDate,
+                    invoiceBookingDate,
+                    subtotal,
+                    paid,
+                    notes,
+                    clientId,
+                    contactId
+                );
+                is.add(i);
+            }
+            return is;
+    }   catch (SQLException ex) {
+            System.getLogger(InvoiceDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (ParseException ex) {
+        System.getLogger(InvoiceDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+    }
+        return null;
     }
 
     @Override
