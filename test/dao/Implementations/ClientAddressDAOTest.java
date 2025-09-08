@@ -1,155 +1,148 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package dao.Implementations;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import model.ClientAddress;
+import model.Client;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import util.DatabasePipeline;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import static org.junit.Assert.*;
 
-/**
- *
- * @author owen
- */
 public class ClientAddressDAOTest {
-    
-    public ClientAddressDAOTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
+    private ClientAddressDAO dao;
+    private Integer insertedAddresstId;
+
     @Before
     public void setUp() {
+        dao = new ClientAddressDAO();
+        insertedAddresstId = null;
     }
-    
+
+    //Delete the temporary record created for testing
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
+        if (insertedAddresstId != null) {
+            try (Connection conn = DatabasePipeline.openTestConnection();
+                PreparedStatement ps = conn.prepareStatement("DELETE FROM ClientAddresses WHERE AddressID = ?")) {
+                ps.setInt(1, insertedAddresstId);
+                ps.executeUpdate();
+            }
+            insertedAddresstId = null;
+        }
     }
 
-    /**
-     * Test of getByClientId method, of class ClientAddressDAO.
-     */
-    @Test
-    public void testGetByClientId() {
-        System.out.println("getByClientId");
-        int id = 0;
-        ClientAddressDAO instance = new ClientAddressDAO();
-        ArrayList<ClientAddress> expResult = null;
-        ArrayList<ClientAddress> result = instance.getByClientId(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getById method, of class ClientAddressDAO.
-     */
-    @Test
-    public void testGetById() {
-        System.out.println("getById");
-        int id = 0;
-        ClientAddressDAO instance = new ClientAddressDAO();
-        ClientAddress expResult = null;
-        ClientAddress result = instance.getById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getAll method, of class ClientAddressDAO.
-     */
-    @Test
-    public void testGetAll() {
-        System.out.println("getAll");
-        ClientAddressDAO instance = new ClientAddressDAO();
-        List<ClientAddress> expResult = null;
-        List<ClientAddress> result = instance.getAll();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of insert method, of class ClientAddressDAO.
-     */
-    @Test
-    public void testInsert() throws SQLException {
-        System.out.println("insert");
-        ClientAddressDAO instance = new ClientAddressDAO();
-        boolean expResult = true;
-        ClientAddress ca = new ClientAddress();
-        ca.setClientID(1);
-        ca.setStreetAddress("123 Main Street");
-        ca.setAreaAddress("Dublin City Centre");
-        ca.setClientCounty("Dublin");
-        ca.setClientEircode("D01 ABC1");
-        ca.setClientPrintAddress("123 Main Street, Dublin City Centre, Dublin, D01 ABC1");
-        boolean result = instance.insert(ca, true);
-        assertEquals(expResult, result);
-   
-    }
-
-    /**
-     * Test of update method, of class ClientAddressDAO.
-     */
-    @Test
-    public void testUpdate() throws SQLException {
-        ClientAddressDAO dao = new ClientAddressDAO();
-        ClientAddress ca = new ClientAddress();
-        ca.setAddressID(5);
-        ca.setClientID(1); // MUST exist in Clients for FK, or have FK enforcement off in test DB
-        ca.setStreetAddress("123 Main Street");
-        ca.setAreaAddress("Dublin City Centre");
-        ca.setClientCounty("Dublin");
-        ca.setClientEircode("D01 ABC1");
-        ca.setClientPrintAddress("123 Main Street, Dublin City Centre, Dublin, D01 ABC1");
-
-        // ---------- Act: update a couple of fields ----------
-        ca.setStreetAddress("456 New Street");
-        ca.setAreaAddress("Dublin 2");
-        boolean updated = dao.update(ca, true);
-
-        // ---------- Assert: update call result ----------
-        assertTrue("Update should return true", updated);
-
-    }
-
-
-    /**
-     * Test of delete method, of class ClientAddressDAO.
-     */
-    @Test
-    public void testDelete() throws SQLException {
-      System.out.println("delete");
-        int id = 11;
-        ClientAddressDAO instance = new ClientAddressDAO();
-        boolean expResult = true;
-        ClientAddress ca = new ClientAddress();
-        ca.setAddressID(id);
-        ca.setClientID(1);
-        ca.setStreetAddress("123 Main Street");
-        ca.setAreaAddress("Dublin City Centre");
-        ca.setClientCounty("Dublin");
-        ca.setClientEircode("D01 ABC1");
-        ca.setClientPrintAddress("123 Main Street, Dublin City Centre, Dublin, D01 ABC1");
-        boolean result = instance.delete(ca, true);
-        assertEquals(expResult, true);
-    }
+    //--- Individual Unit Tests ---//
     
+    @Test
+    public void testInsert_only() throws Exception {
+        
+        Client c = new Client();
+        c.setClientName("Test Client");
+        c.setClientEmail("testclient@example.com");
+        c.setClientNumber("999888777");
+        c.setClientWebsite("www.testclient.com");
+
+        boolean inserted = dao.insert(c, true);
+        assertTrue("Insert should succeed", inserted);
+        assertTrue("DAO should set generated ID", c.getClientID() > 0);
+        insertedAddresstId = c.getClientID();
+
+        //Verify that the inserted record is correct
+        try (
+            Connection conn = DatabasePipeline.openTestConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT ClientName, ClientEmail, ClientNumber, ClientWebsite FROM Clients WHERE ClientID = ?")
+        ) 
+        {
+            ps.setInt(1, insertedAddresstId);
+            try (ResultSet rs = ps.executeQuery()) {
+                assertTrue("Row should exist", rs.next());
+                assertEquals("Test Client", rs.getString("ClientName"));
+                assertEquals("testclient@example.com", rs.getString("ClientEmail"));
+                assertEquals("999888777", rs.getString("ClientNumber"));
+                assertEquals("www.testclient.com", rs.getString("ClientWebsite"));
+            }
+        }
+    }
+
+    @Test
+    public void testUpdate_only() throws Exception {
+        
+        Client c = new Client();
+        c.setClientName("Before Update");
+        c.setClientEmail("before@example.com");
+        c.setClientNumber("111222333");
+        c.setClientWebsite("www.before.com");
+
+        assertTrue(dao.insert(c, true));
+        assertTrue(c.getClientID() > 0);
+        insertedAddresstId = c.getClientID();
+
+        c.setClientName("After Update");
+        c.setClientEmail("after@example.com");
+        c.setClientNumber("444555666");
+        c.setClientWebsite("www.after.com");
+
+        boolean updated = dao.update(c, true);
+        assertTrue("Update should succeed", updated);
+
+        try (Connection conn = DatabasePipeline.openTestConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "SELECT ClientName, ClientEmail, ClientNumber, ClientWebsite FROM Clients WHERE ClientID = ?")) {
+            ps.setInt(1, insertedAddresstId);
+            try (ResultSet rs = ps.executeQuery()) {
+                assertTrue("Row should exist", rs.next());
+                assertEquals("After Update", rs.getString("ClientName"));
+                assertEquals("after@example.com", rs.getString("ClientEmail"));
+                assertEquals("444555666", rs.getString("ClientNumber"));
+                assertEquals("www.after.com", rs.getString("ClientWebsite"));
+            }
+        }
+    }
+
+    @Test
+    public void testDelete_only() throws Exception {
+        
+        Client c = new Client();
+        c.setClientName("To Delete");
+        c.setClientEmail("delete@example.com");
+        c.setClientNumber("777888999");
+        c.setClientWebsite("www.delete.com");
+
+        assertTrue(dao.insert(c, true));
+        assertTrue(c.getClientID() > 0);
+        insertedAddresstId = c.getClientID();
+
+        boolean deleted = dao.delete(c, true);
+        assertTrue("Delete should succeed", deleted);
+
+        try (Connection conn = DatabasePipeline.openTestConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT 1 FROM Clients WHERE ClientID = ?")) {
+            ps.setInt(1, insertedAddresstId);
+            try (ResultSet rs = ps.executeQuery()) {
+                assertFalse("Row should not exist after delete", rs.next());
+            }
+        }
+
+        //Prevents @after trying to remove an already deleted record
+        insertedAddresstId = null;
+    }
+
+    //--- Test for all operations ---//
     
+    @Test
+    public void testAll_CRUD_inOrder() throws Exception {
+        
+        setUp();
+        try { testInsert_only(); } finally { tearDown(); }
+
+        setUp();
+        try { testUpdate_only(); } finally { tearDown(); }
+
+        setUp();
+        try { testDelete_only(); } finally { tearDown(); }
+    }
 }

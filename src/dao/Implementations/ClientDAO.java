@@ -189,6 +189,7 @@ try (
             stmt.setString(2, t.getClientEmail());
             stmt.setString(3, t.getClientNumber());
             stmt.setString(4, t.getClientWebsite());
+            stmt.setInt(5, t.getClientID());
 
             int rows = stmt.executeUpdate();
             return rows == 1;

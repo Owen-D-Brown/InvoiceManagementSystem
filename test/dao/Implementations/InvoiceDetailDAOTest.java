@@ -6,6 +6,7 @@ package dao.Implementations;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.Invoice;
 import model.InvoiceDetail;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -123,6 +124,22 @@ public class InvoiceDetailDAOTest {
         InvoiceDetailDAO instance = new InvoiceDetailDAO();
         boolean expResult = false;
         boolean result = instance.delete(id);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of deleteByInvoiceNumber method, of class InvoiceDetailDAO.
+     */
+    @Test
+    public void testDeleteByInvoiceNumber() throws Exception {
+        System.out.println("deleteByInvoiceNumber");
+        Invoice t = null;
+        boolean test = false;
+        InvoiceDetailDAO instance = new InvoiceDetailDAO();
+        boolean expResult = false;
+        boolean result = instance.deleteByInvoiceNumber(t, test);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
