@@ -5,7 +5,9 @@
 package dao.interfaces;
 
 import java.util.ArrayList;
+import model.Invoice;
 import model.InvoiceDetail;
+import java.sql.SQLException;
 
 /**
  *
@@ -13,4 +15,6 @@ import model.InvoiceDetail;
  */
 public interface InvoiceDetailDAOInterface extends BaseDAOInterface<InvoiceDetail> {
     ArrayList<InvoiceDetail> getByInvoiceNumber(int number);
+    
+    boolean deleteByInvoiceNumber(Invoice t, boolean test) throws SQLException;
 }
