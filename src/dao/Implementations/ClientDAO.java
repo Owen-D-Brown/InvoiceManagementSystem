@@ -134,18 +134,81 @@ try (
     }
 
     @Override
-    public boolean insert(Object t) {
-        return true;
+    public boolean insert(Client t, boolean test) throws SQLException {
+        String sql = "INSERT INTO Clients " +
+                     "(ClientName, ClientEmail, ClientNumber, ClientWebsite) " +
+                     "VALUES (?, ?, ?, ?)";
+
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) 
+        {
+            stmt.setString(1, t.getClientName());
+            stmt.setString(2, t.getClientEmail());
+            stmt.setString(3, t.getClientNumber());
+            stmt.setString(4, t.getClientWebsite());
+           
+
+            //Update the Primary Key in the POJO of the record just added to database. 
+            //Needed because the DB auto-increments this field. Any POJO passed to this method should not have a valid primary key ID until after resolution.
+            int rows = stmt.executeUpdate();
+            
+            if (rows == 1) {
+                try (ResultSet keys = stmt.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        int newId = keys.getInt(1);
+                        t.setClientID(newId);
+                        return true;
+                    }
+                }
+            }
+            System.out.println("ISSUE SETTING PRIMARY KEY of POJO: "+t);
+            System.out.println("CHECK DATABASE FOR ADDED RECORD");
+            return false;
+        }
     }
 
+    //Update Record in Database
     @Override
-    public boolean update(Object t) {
-        return false;
+    public boolean update(Client t, boolean test) throws SQLException {
+        String sql = "UPDATE Clients " +
+                     "SET ClientName = ?, ClientEmail = ?, ClientNumber = ?, ClientWebsite = ? " +
+                     "WHERE ClientID = ?";
+
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) 
+        {
+            stmt.setString(1, t.getClientName());
+            stmt.setString(2, t.getClientEmail());
+            stmt.setString(3, t.getClientNumber());
+            stmt.setString(4, t.getClientWebsite());
+
+            int rows = stmt.executeUpdate();
+            return rows == 1;
+        }   
     }
 
+    //Delete Record from Database
     @Override
-    public boolean delete(int id) {
-        return false;
+    public boolean delete(Client t, boolean test) throws SQLException {
+        String sql = "DELETE from Clients WHERE ClientID = ?"; 
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) 
+        {
+            stmt.setInt(1, t.getClientID());
+            return stmt.executeUpdate() == 1;
+        }      
     }
     
 }

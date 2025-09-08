@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Client;
 import model.ClientAddress;
 import util.DatabasePipeline;
+import java.sql.Statement;
 
 /**
  *
@@ -110,21 +110,89 @@ public class ClientAddressDAO implements ClientAddressDAOInterface {
             System.getLogger(ClientDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             
         }
-        return null;        }
-
-    @Override
-    public boolean insert(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;        
     }
 
     @Override
-    public boolean update(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean insert(ClientAddress t, boolean test) throws SQLException {
+        String sql = "INSERT INTO ClientAddresses " +
+                     "(ClientID, StreetAddress, AreaAddress, ClientCounty, ClientEircode, ClientPrintAddress) " +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) 
+        {
+            stmt.setInt(1, t.getClientID());
+            stmt.setString(2, t.getStreetAddress());
+            stmt.setString(3, t.getAreaAddress());
+            stmt.setString(4, t.getClientCounty());
+            stmt.setString(5, t.getClientEircode());
+            stmt.setString(6, t.getClientPrintAddress());
+
+            //Update the Primary AddressID Key in the POJO of the record just added to database. 
+            //Needed because the DB auto-increments this field. Any ClientAddress passed to this method should not have a valid AddressID until after resolution.
+            int rows = stmt.executeUpdate();
+            
+            if (rows == 1) {
+                try (ResultSet keys = stmt.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        int newId = keys.getInt(1);
+                        t.setAddressID(newId);
+                        return true;
+                    }
+                }
+            }
+            System.out.println("ISSUE SETTING AddressID of POJO: "+t);
+            System.out.println("CHECK DATABASE FOR ADDED RECORD");
+            return false;
+        }
     }
 
+    //Update Record in Database
     @Override
-    public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean update(ClientAddress t, boolean test) throws SQLException {
+        String sql = "UPDATE ClientAddresses " +
+                     "SET ClientID = ?, StreetAddress = ?, AreaAddress = ?, " +
+                     "ClientCounty = ?, ClientEircode = ?, ClientPrintAddress = ? " +
+                     "WHERE AddressID = ?";
+
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) 
+        {
+            stmt.setInt(1, t.getClientID());
+            stmt.setString(2, t.getStreetAddress());
+            stmt.setString(3, t.getAreaAddress());
+            stmt.setString(4, t.getClientCounty());
+            stmt.setString(5, t.getClientEircode());
+            stmt.setString(6, t.getClientPrintAddress());
+            stmt.setInt(7, t.getAddressID()); //Primary Key for the WHERE Clause
+
+            int rows = stmt.executeUpdate();
+            return rows == 1;
+        }   
     }
-    
+
+    //Delete Record from Database
+    @Override
+    public boolean delete(ClientAddress t, boolean test) throws SQLException {
+        String sql = "DELETE from ClientAddresses WHERE AddressID = ?"; 
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) 
+        {
+            stmt.setInt(1, t.getAddressID());
+            return stmt.executeUpdate() == 1;
+        }      
+    }
 }

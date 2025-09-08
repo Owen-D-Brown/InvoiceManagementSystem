@@ -17,6 +17,7 @@ public class Invoice {
     private Date invoiceDueDate;
     private Date invoiceBookingDate;
     private float invoiceSubtotal;
+    private float invoiceTotal;
     private boolean invoicePaid;
     private String invoiceNotes;
     private int clientID;
@@ -24,12 +25,13 @@ public class Invoice {
 
     public Invoice() { }
 
-    public Invoice(int invoiceNumber, Date invoiceDate, Date invoiceDueDate, Date invoiceBookingDate, float invoiceSubtotal, boolean invoicePaid, String invoiceNotes, int clientID, int contactID) {
+    public Invoice(int invoiceNumber, Date invoiceDate, Date invoiceDueDate, Date invoiceBookingDate, float invoiceSubtotal, float invoiceTotal, boolean invoicePaid, String invoiceNotes, int clientID, int contactID) {
         this.invoiceNumber = invoiceNumber;
         this.invoiceDate = invoiceDate;
         this.invoiceDueDate = invoiceDueDate;
         this.invoiceBookingDate = invoiceBookingDate;
         this.invoiceSubtotal = invoiceSubtotal;
+        this.invoiceTotal = invoiceTotal;
         this.invoicePaid = invoicePaid;
         this.invoiceNotes = invoiceNotes;
         this.clientID = clientID;
@@ -38,6 +40,10 @@ public class Invoice {
 
     public int getInvoiceNumber() {
         return invoiceNumber;
+    }
+    
+    public void setInvoiceNumber(int no) {
+        this.invoiceNumber = no;
     }
 
     public Date getInvoiceDate() {
@@ -70,6 +76,14 @@ public class Invoice {
 
     public void setInvoiceSubtotal(float invoiceSubtotal) {
         this.invoiceSubtotal = invoiceSubtotal;
+    }
+    
+    public float getInvoiceTotal() {
+        return this.invoiceTotal;
+    }
+    
+    public void setInvoiceTotal(float total) {
+        this.invoiceTotal = total;
     }
 
     public boolean isInvoicePaid() {
@@ -106,7 +120,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate + ", invoiceDueDate=" + invoiceDueDate + ", invoiceBookingDate=" + invoiceBookingDate + ", invoiceSubtotal=" + invoiceSubtotal + ", invoicePaid=" + invoicePaid + ", invoiceNotes=" + invoiceNotes + ", clientID=" + clientID + ", contactID=" + contactID + '}';
+        return "Invoice{" + "invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate + ", invoiceDueDate=" + invoiceDueDate + ", invoiceBookingDate=" + invoiceBookingDate + ", invoiceSubtotal=" + invoiceSubtotal + ", invoiceTotal=" + invoiceTotal + ", invoicePaid=" + invoicePaid + ", invoiceNotes=" + invoiceNotes + ", clientID=" + clientID + ", contactID=" + contactID + '}';
     }
     
     

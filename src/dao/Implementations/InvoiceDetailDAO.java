@@ -109,18 +109,19 @@ public class InvoiceDetailDAO implements InvoiceDetailDAOInterface {
     }
 
     @Override
-    public boolean insert(Object t) {
+    public boolean insert(InvoiceDetail t, boolean test) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean update(Object t) {
+    public boolean update(InvoiceDetail t, boolean test) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(InvoiceDetail t, boolean test) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
     
 }

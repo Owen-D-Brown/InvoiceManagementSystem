@@ -8,6 +8,7 @@ import dao.interfaces.ContactDAOInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.Client;
@@ -143,18 +144,85 @@ public class ContactDAO implements ContactDAOInterface {
     }
 
     @Override
-    public boolean insert(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean insert(Contact t, boolean test) throws SQLException {
+        String sql = "INSERT INTO Contacts " +
+                     "(ClientID, ContactFirstName, ContactLastName, ContactNumber, ContactEmail) " +
+                     "VALUES (?, ?, ?, ?, ?)";
+
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) 
+        {
+            stmt.setInt(1, t.getClientID());
+            stmt.setString(2, t.getContactFirstName());
+            stmt.setString(3, t.getContactLastName());
+            stmt.setString(4, t.getContactNumber());
+            stmt.setString(5, t.getContactEmail());
+
+           
+
+            //Update the Primary Key in the POJO of the record just added to database. 
+            //Needed because the DB auto-increments this field. Any POJO passed to this method should not have a valid primary key ID until after resolution.
+            int rows = stmt.executeUpdate();
+            
+            if (rows == 1) {
+                try (ResultSet keys = stmt.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        int newId = keys.getInt(1);
+                        t.setContactID(newId);
+                        return true;
+                    }
+                }
+            }
+            System.out.println("ISSUE SETTING PRIMARY KEY of POJO: "+t);
+            System.out.println("CHECK DATABASE FOR ADDED RECORD");
+            return false;
+        }
     }
 
+    //Update Record in Database
     @Override
-    public boolean update(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean update(Contact t, boolean test) throws SQLException {
+        String sql = "UPDATE Contacts " +
+                     "SET ClientID = ?, ContactFirstName = ?, ContactLastName = ?, " +
+                     "ContactNumber = ?, ContactEmail = ? " +
+                     "WHERE ContactID = ?";
+
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) 
+        {
+            stmt.setInt(1, t.getClientID());
+            stmt.setString(2, t.getContactFirstName());
+            stmt.setString(3, t.getContactLastName());
+            stmt.setString(4, t.getContactNumber());
+            stmt.setString(5, t.getContactEmail());
+            stmt.setInt(6, t.getContactID()); //Primary key for update
+
+            int rows = stmt.executeUpdate();
+            return rows == 1;
+        }   
     }
 
+    //Delete Record from Database
     @Override
-    public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean delete(Contact t, boolean test) throws SQLException {
+        String sql = "DELETE from Contacts WHERE ContactID = ?"; 
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) 
+        {
+            stmt.setInt(1, t.getContactID());
+            return stmt.executeUpdate() == 1;
+        }      
     }
-    
 }

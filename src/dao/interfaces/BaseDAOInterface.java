@@ -4,6 +4,7 @@
  */
 package dao.interfaces;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public interface BaseDAOInterface<T> {
     
     T getById(int id);
     List<T> getAll();
-    boolean insert(Object t);
-    boolean update(Object t);
-    boolean delete(int id);
+    boolean insert(T obj, boolean test) throws SQLException;
+    boolean update(T obj, boolean test) throws SQLException;
+    boolean delete(T obj, boolean test) throws SQLException;
 }

@@ -4,8 +4,9 @@
  */
 package dao.Implementations;
 
+import java.util.ArrayList;
 import java.util.List;
-import model.PONumber;
+import model.Contact;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author owen
  */
-public class PONumberDAOTest {
+public class ContactDAOTest {
     
-    public PONumberDAOTest() {
+    public ContactDAOTest() {
     }
     
     @BeforeClass
@@ -39,57 +40,72 @@ public class PONumberDAOTest {
     }
 
     /**
-     * Test of getByContactId method, of class PONumberDAO.
+     * Test of getByClientId method, of class ContactDAO.
      */
     @Test
-    public void testGetByContactId() {
-        System.out.println("getByContactId");
+    public void testGetByClientId() {
+        System.out.println("getByClientId");
         int id = 0;
-        PONumberDAO instance = new PONumberDAO();
-        List<PONumber> expResult = null;
-        List<PONumber> result = instance.getByContactId(id);
+        ContactDAO instance = new ContactDAO();
+        ArrayList<Contact> expResult = null;
+        ArrayList<Contact> result = instance.getByClientId(id);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getById method, of class PONumberDAO.
+     * Test of getById method, of class ContactDAO.
      */
     @Test
     public void testGetById() {
         System.out.println("getById");
         int id = 0;
-        PONumberDAO instance = new PONumberDAO();
-        PONumber expResult = null;
-        PONumber result = instance.getById(id);
+        ContactDAO instance = new ContactDAO();
+        Contact expResult = null;
+        Contact result = instance.getById(id);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getAll method, of class PONumberDAO.
+     * Test of getByFirstName method, of class ContactDAO.
+     */
+    @Test
+    public void testGetByFirstName() {
+        System.out.println("getByFirstName");
+        String name = "";
+        ContactDAO instance = new ContactDAO();
+        Contact expResult = null;
+        Contact result = instance.getByFirstName(name);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getAll method, of class ContactDAO.
      */
     @Test
     public void testGetAll() {
         System.out.println("getAll");
-        PONumberDAO instance = new PONumberDAO();
-        List<PONumber> expResult = null;
-        List<PONumber> result = instance.getAll();
+        ContactDAO instance = new ContactDAO();
+        List<Contact> expResult = null;
+        List<Contact> result = instance.getAll();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of insert method, of class PONumberDAO.
+     * Test of insert method, of class ContactDAO.
      */
     @Test
     public void testInsert() {
         System.out.println("insert");
         Object t = null;
-        PONumberDAO instance = new PONumberDAO();
+        ContactDAO instance = new ContactDAO();
         boolean expResult = false;
         boolean result = instance.insert(t);
         assertEquals(expResult, result);
@@ -98,13 +114,13 @@ public class PONumberDAOTest {
     }
 
     /**
-     * Test of update method, of class PONumberDAO.
+     * Test of update method, of class ContactDAO.
      */
     @Test
     public void testUpdate() {
         System.out.println("update");
         Object t = null;
-        PONumberDAO instance = new PONumberDAO();
+        ContactDAO instance = new ContactDAO();
         boolean expResult = false;
         boolean result = instance.update(t);
         assertEquals(expResult, result);
@@ -113,13 +129,13 @@ public class PONumberDAOTest {
     }
 
     /**
-     * Test of delete method, of class PONumberDAO.
+     * Test of delete method, of class ContactDAO.
      */
     @Test
     public void testDelete() {
         System.out.println("delete");
         int id = 0;
-        PONumberDAO instance = new PONumberDAO();
+        ContactDAO instance = new ContactDAO();
         boolean expResult = false;
         boolean result = instance.delete(id);
         assertEquals(expResult, result);
