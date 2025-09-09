@@ -21,10 +21,20 @@ import model.PONumber;
 public class FullInvoiceDTO {
     
     private Invoice invoice;
-    private FullClientDTO client;
+    private Client client;
     private Contact contact;
     private List<InvoiceDetail> invoiceDetails;
     //private PONumber poNumber;
+    //address
+
+    public FullInvoiceDTO(Invoice invoice, Client client, Contact contact, List<InvoiceDetail> invoiceDetails) {
+        this.invoice = invoice;
+        this.client = client;
+        this.contact = contact;
+        this.invoiceDetails = invoiceDetails;
+    }
+    
+    public FullInvoiceDTO() { };
 
     //Invoice Number
     public int getInvoiceNumber() {
@@ -86,13 +96,13 @@ public class FullInvoiceDTO {
     }
 
     //Client
-    public FullClientDTO getClient() {
+    public Client getClient() {
         return this.client;
     }
 
-    public void setClient(FullClientDTO client) {
+    public void setClient(Client client) {
         this.client = client;
-        invoice.setClientID(client.getClient().getClientID());
+        invoice.setClientID(client.getClientID());
     }
 
     //Contact
