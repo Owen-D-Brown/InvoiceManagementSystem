@@ -4,8 +4,12 @@
  */
 package dao.Implementations;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import model.Contact;
 import model.Invoice;
 import model.InvoiceDetail;
 import org.junit.After;
@@ -14,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.DatabasePipeline;
 
 /**
  *
@@ -21,128 +26,143 @@ import static org.junit.Assert.*;
  */
 public class InvoiceDetailDAOTest {
     
-    public InvoiceDetailDAOTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+    private InvoiceDetailDAO dao;
+    private Integer insertedDetailId;
+
     @Before
     public void setUp() {
+        dao = new InvoiceDetailDAO();
+        insertedDetailId = null;
     }
-    
+
+    //Delete the temporary record created for testing
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
+        if (insertedDetailId != null) {
+            try (Connection conn = DatabasePipeline.openTestConnection();
+                PreparedStatement ps = conn.prepareStatement("DELETE FROM InvoiceDetails WHERE DetailID = ?")) {
+                ps.setInt(1, insertedDetailId);
+                ps.executeUpdate();
+            }
+            insertedDetailId = null;
+        }
     }
 
-    /**
-     * Test of getByInvoiceNumber method, of class InvoiceDetailDAO.
-     */
-    @Test
-    public void testGetByInvoiceNumber() {
-        System.out.println("getByInvoiceNumber");
-        int number = 0;
-        InvoiceDetailDAO instance = new InvoiceDetailDAO();
-        ArrayList<InvoiceDetail> expResult = null;
-        ArrayList<InvoiceDetail> result = instance.getByInvoiceNumber(number);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getById method, of class InvoiceDetailDAO.
-     */
-    @Test
-    public void testGetById() {
-        System.out.println("getById");
-        int id = 0;
-        InvoiceDetailDAO instance = new InvoiceDetailDAO();
-        InvoiceDetail expResult = null;
-        InvoiceDetail result = instance.getById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getAll method, of class InvoiceDetailDAO.
-     */
-    @Test
-    public void testGetAll() {
-        System.out.println("getAll");
-        InvoiceDetailDAO instance = new InvoiceDetailDAO();
-        List<InvoiceDetail> expResult = null;
-        List<InvoiceDetail> result = instance.getAll();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of insert method, of class InvoiceDetailDAO.
-     */
-    @Test
-    public void testInsert() {
-        System.out.println("insert");
-        Object t = null;
-        InvoiceDetailDAO instance = new InvoiceDetailDAO();
-        boolean expResult = false;
-        boolean result = instance.insert(t);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of update method, of class InvoiceDetailDAO.
-     */
-    @Test
-    public void testUpdate() {
-        System.out.println("update");
-        Object t = null;
-        InvoiceDetailDAO instance = new InvoiceDetailDAO();
-        boolean expResult = false;
-        boolean result = instance.update(t);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of delete method, of class InvoiceDetailDAO.
-     */
-    @Test
-    public void testDelete() {
-        System.out.println("delete");
-        int id = 0;
-        InvoiceDetailDAO instance = new InvoiceDetailDAO();
-        boolean expResult = false;
-        boolean result = instance.delete(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteByInvoiceNumber method, of class InvoiceDetailDAO.
-     */
-    @Test
-    public void testDeleteByInvoiceNumber() throws Exception {
-        System.out.println("deleteByInvoiceNumber");
-        Invoice t = null;
-        boolean test = false;
-        InvoiceDetailDAO instance = new InvoiceDetailDAO();
-        boolean expResult = false;
-        boolean result = instance.deleteByInvoiceNumber(t, test);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    //--- Individual Unit Tests ---//
     
+    @Test
+    public void testInsert_only() throws Exception {
+        
+        InvoiceDetail c = new InvoiceDetail();
+        c.setInvoiceNumber(1);
+        c.setItemID(1);
+        c.setItemQuantity(1);
+        
+   
+
+        boolean inserted = dao.insert(c, true);
+        assertTrue("Insert should succeed", inserted);
+        assertTrue("DAO should set generated ID", c.getDetailID()> 0);
+        insertedDetailId = c.getDetailID();
+
+        //Verify that the inserted record is correct
+        try (
+            Connection conn = DatabasePipeline.openTestConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT InvoiceNumber, ItemID, ItemQuantity " +
+                                                         "FROM InvoiceDetails WHERE DetailID = ?")
+        ) 
+        {
+            ps.setInt(1, insertedDetailId);
+            try (ResultSet rs = ps.executeQuery()) {
+                assertTrue("Row should exist", rs.next());
+                assertEquals(1, rs.getInt("InvoiceNumber"));
+                assertEquals(1, rs.getInt("ItemID"));
+                assertEquals(1, rs.getInt("ItemQuantity"));
+                assertFalse("Only one row expected", rs.next());
+            }
+        }
+    }
+
+    @Test
+    public void testUpdate_only() throws Exception {
+        
+        InvoiceDetail c = new InvoiceDetail();
+        c.setInvoiceNumber(1);
+        c.setItemID(1);
+        c.setItemQuantity(1);
+
+        assertTrue(dao.insert(c, true));
+        assertTrue(c.getDetailID()> 0);
+        insertedDetailId = c.getDetailID();
+
+        c.setInvoiceNumber(2);
+        c.setItemID(2);
+        c.setItemQuantity(2);
+
+
+        boolean updated = dao.update(c, true);
+        assertTrue("Update should succeed", updated);
+
+        try (
+            Connection conn = DatabasePipeline.openTestConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT InvoiceNumber, ItemID, ItemQuantity " +
+                                                         "FROM InvoiceDetails WHERE DetailID = ?")
+        ) 
+        {
+            ps.setInt(1, insertedDetailId);
+            try (ResultSet rs = ps.executeQuery()) {
+                assertTrue("Row should exist", rs.next());
+                assertEquals(2, rs.getInt("InvoiceNumber"));
+                assertEquals(2, rs.getInt("ItemID"));
+                assertEquals(2, rs.getInt("ItemQuantity"));
+                assertFalse("Only one row expected", rs.next());
+            }
+        }
+    }
+
+    @Test
+    public void testDelete_only() throws Exception {
+        
+        InvoiceDetail c = new InvoiceDetail();
+        c.setInvoiceNumber(1);
+        c.setItemID(1);
+        c.setItemQuantity(1);
+
+
+        assertTrue(dao.insert(c, true));
+        assertTrue(c.getDetailID()> 0);
+        insertedDetailId = c.getDetailID();
+
+        boolean deleted = dao.delete(c, true);
+        assertTrue("Delete should succeed", deleted);
+
+        try (
+            Connection conn = DatabasePipeline.openTestConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT 1 FROM InvoiceDetails WHERE DetailID = ?")
+        ) 
+        {
+            ps.setInt(1, insertedDetailId);
+            try (ResultSet rs = ps.executeQuery()) {
+                assertFalse("Row should not exist after delete", rs.next());
+            }
+        }   
+
+        //Prevents @after trying to remove an already deleted record
+        insertedDetailId = null;
+    }
+
+    //--- Test for all operations ---//
+    
+    @Test
+    public void testAll_CRUD_inOrder() throws Exception {
+        
+        setUp();
+        try { testInsert_only(); } finally { tearDown(); }
+
+        setUp();
+        try { testUpdate_only(); } finally { tearDown(); }
+
+        setUp();
+        try { testDelete_only(); } finally { tearDown(); }
+    }
 }

@@ -8,6 +8,7 @@ import util.DatabasePipeline;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import model.ClientAddress;
 
 import static org.junit.Assert.*;
 
@@ -40,30 +41,37 @@ public class ClientAddressDAOTest {
     @Test
     public void testInsert_only() throws Exception {
         
-        Client c = new Client();
-        c.setClientName("Test Client");
-        c.setClientEmail("testclient@example.com");
-        c.setClientNumber("999888777");
-        c.setClientWebsite("www.testclient.com");
+        ClientAddress c = new ClientAddress();
+        c.setClientID(1);
+        c.setStreetAddress("1 Street");
+        c.setAreaAddress("Dublin");
+        c.setClientCounty("Inserted County");
+        c.setClientEircode("DDD DDDD");
+        c.setClientPrintAddress("Inserted Print Address");
+        
+   
 
         boolean inserted = dao.insert(c, true);
         assertTrue("Insert should succeed", inserted);
-        assertTrue("DAO should set generated ID", c.getClientID() > 0);
-        insertedAddresstId = c.getClientID();
+        assertTrue("DAO should set generated ID", c.getAddressID()> 0);
+        insertedAddresstId = c.getAddressID();
 
         //Verify that the inserted record is correct
         try (
             Connection conn = DatabasePipeline.openTestConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT ClientName, ClientEmail, ClientNumber, ClientWebsite FROM Clients WHERE ClientID = ?")
+            PreparedStatement ps = conn.prepareStatement("SELECT ClientID, StreetAddress, AreaAddress, ClientCounty, ClientEircode, ClientPrintAddress " +
+                                                         "FROM ClientAddresses WHERE AddressID = ?")
         ) 
         {
             ps.setInt(1, insertedAddresstId);
             try (ResultSet rs = ps.executeQuery()) {
                 assertTrue("Row should exist", rs.next());
-                assertEquals("Test Client", rs.getString("ClientName"));
-                assertEquals("testclient@example.com", rs.getString("ClientEmail"));
-                assertEquals("999888777", rs.getString("ClientNumber"));
-                assertEquals("www.testclient.com", rs.getString("ClientWebsite"));
+                assertEquals(1, rs.getInt("ClientID"));
+                assertEquals("1 Street", rs.getString("StreetAddress"));
+                assertEquals("Dublin", rs.getString("AreaAddress"));
+                assertEquals("Inserted County", rs.getString("ClientCounty"));
+                assertEquals("DDD DDDD", rs.getString("ClientEircode"));
+                assertEquals("Inserted Print Address", rs.getString("ClientPrintAddress"));
             }
         }
     }
@@ -71,34 +79,43 @@ public class ClientAddressDAOTest {
     @Test
     public void testUpdate_only() throws Exception {
         
-        Client c = new Client();
-        c.setClientName("Before Update");
-        c.setClientEmail("before@example.com");
-        c.setClientNumber("111222333");
-        c.setClientWebsite("www.before.com");
+        ClientAddress c = new ClientAddress();
+        c.setClientID(1);
+        c.setStreetAddress("1 Street");
+        c.setAreaAddress("Dublin");
+        c.setClientCounty("Inserted County");
+        c.setClientEircode("DDD DDDD");
+        c.setClientPrintAddress("Inserted Print Address");
 
         assertTrue(dao.insert(c, true));
-        assertTrue(c.getClientID() > 0);
-        insertedAddresstId = c.getClientID();
+        assertTrue(c.getAddressID()> 0);
+        insertedAddresstId = c.getAddressID();
 
-        c.setClientName("After Update");
-        c.setClientEmail("after@example.com");
-        c.setClientNumber("444555666");
-        c.setClientWebsite("www.after.com");
+        c.setStreetAddress("2 Updated Street");
+        c.setAreaAddress("Updated Area");
+        c.setClientCounty("Updated County");
+        c.setClientEircode("AAA AAAA");
+        c.setClientPrintAddress("Updated Print Address");
+
 
         boolean updated = dao.update(c, true);
         assertTrue("Update should succeed", updated);
 
-        try (Connection conn = DatabasePipeline.openTestConnection();
-             PreparedStatement ps = conn.prepareStatement(
-                     "SELECT ClientName, ClientEmail, ClientNumber, ClientWebsite FROM Clients WHERE ClientID = ?")) {
+        try (
+            Connection conn = DatabasePipeline.openTestConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT StreetAddress, AreaAddress, ClientCounty, ClientEircode, ClientPrintAddress " +
+                                                         "FROM ClientAddresses WHERE AddressID = ?")
+        ) 
+        {
             ps.setInt(1, insertedAddresstId);
             try (ResultSet rs = ps.executeQuery()) {
                 assertTrue("Row should exist", rs.next());
-                assertEquals("After Update", rs.getString("ClientName"));
-                assertEquals("after@example.com", rs.getString("ClientEmail"));
-                assertEquals("444555666", rs.getString("ClientNumber"));
-                assertEquals("www.after.com", rs.getString("ClientWebsite"));
+                assertEquals("2 Updated Street", rs.getString("StreetAddress"));
+                assertEquals("Updated Area", rs.getString("AreaAddress"));
+                assertEquals("Updated County", rs.getString("ClientCounty"));
+                assertEquals("AAA AAAA", rs.getString("ClientEircode"));
+                assertEquals("Updated Print Address", rs.getString("ClientPrintAddress"));
+                assertFalse("Only one row expected", rs.next());
             }
         }
     }
@@ -106,21 +123,24 @@ public class ClientAddressDAOTest {
     @Test
     public void testDelete_only() throws Exception {
         
-        Client c = new Client();
-        c.setClientName("To Delete");
-        c.setClientEmail("delete@example.com");
-        c.setClientNumber("777888999");
-        c.setClientWebsite("www.delete.com");
+        ClientAddress c = new ClientAddress();
+        c.setClientID(1);  
+        c.setStreetAddress("Delete St");
+        c.setAreaAddress("Dublin");
+        c.setClientCounty("Delete County");
+        c.setClientEircode("DEL 1234");
+        c.setClientPrintAddress("Delete Address, Dublin, Delete County, DEL 1234");
+
 
         assertTrue(dao.insert(c, true));
-        assertTrue(c.getClientID() > 0);
-        insertedAddresstId = c.getClientID();
+        assertTrue(c.getAddressID()> 0);
+        insertedAddresstId = c.getAddressID();
 
         boolean deleted = dao.delete(c, true);
         assertTrue("Delete should succeed", deleted);
 
         try (Connection conn = DatabasePipeline.openTestConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT 1 FROM Clients WHERE ClientID = ?")) {
+             PreparedStatement ps = conn.prepareStatement("SELECT 1 FROM ClientAddresses WHERE AddressID = ?")) {
             ps.setInt(1, insertedAddresstId);
             try (ResultSet rs = ps.executeQuery()) {
                 assertFalse("Row should not exist after delete", rs.next());

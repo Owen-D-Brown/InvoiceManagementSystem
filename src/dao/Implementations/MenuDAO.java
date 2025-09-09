@@ -106,7 +106,7 @@ try (
 
     @Override
     public boolean insert(MenuItem t, boolean test) throws SQLException {
-        String sql = "INSERT INTO Items " +
+        String sql = "INSERT INTO Menu " +
                      "(ItemName, ItemPrice, ItemWeight, ItemCost) " +
                      "VALUES (?, ?, ?, ?)";
         try (
@@ -147,7 +147,7 @@ try (
     //Update Record in Database
     @Override
     public boolean update(MenuItem t, boolean test) throws SQLException {
-        String sql = "UPDATE Items SET " +
+        String sql = "UPDATE Menu SET " +
                      "ItemName = ?, ItemPrice = ?, ItemWeight = ?, ItemCost = ? " +
                      "WHERE ItemID = ?";
 
@@ -172,7 +172,7 @@ try (
     //Delete Record from Database
     @Override
     public boolean delete(MenuItem t, boolean test) throws SQLException {
-        String sql = "DELETE from InvoiceDetails WHERE DetailID = ?"; 
+        String sql = "DELETE from Menu WHERE ItemID = ?"; 
         try (
             java.sql.Connection conn = test 
             ? DatabasePipeline.openTestConnection()
