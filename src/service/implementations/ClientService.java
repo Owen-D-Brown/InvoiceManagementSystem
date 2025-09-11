@@ -4,57 +4,52 @@
  */
 package service.implementations;
 
+import dao.Implementations.ClientAddressDAO;
 import dao.Implementations.ClientDAO;
 import dao.Implementations.ContactDAO;
-import dao.Implementations.InvoiceDAO;
-import dao.Implementations.InvoiceDetailDAO;
-import dto.FullInvoiceDTO;
-import java.sql.SQLException;
+import dto.FullClientDTO;
 import java.util.ArrayList;
-import java.util.List;
 import model.Client;
+import model.ClientAddress;
 import model.Contact;
-import model.Invoice;
-import model.InvoiceDetail;
-import service.interfaces.InvoiceServiceInterface;
+import service.interfaces.ClientServiceInterface;
 
 /**
  *
  * @author owen
  */
-public class InvoiceService implements InvoiceServiceInterface {
+public class ClientService implements ClientServiceInterface {
 
-    
-    InvoiceDAO invoiceDAO = new InvoiceDAO();
     ClientDAO clientDAO = new ClientDAO();
     ContactDAO contactDAO = new ContactDAO();
-    InvoiceDetailDAO invoiceDetailsDAO = new InvoiceDetailDAO(); 
-
+    ClientAddressDAO addressDAO = new ClientAddressDAO();
+    
     @Override
-    public FullInvoiceDTO getById(int id, boolean test) {
- return null;
+    public FullClientDTO getById(int id, boolean test) {
+        Client client = clientDAO.getById(id);
+        ArrayList<Contact> contacts = contactDAO.getByClientId(id);
+        ArrayList<ClientAddress> addresses = addressDAO.getByClientId(id);
+        return new FullClientDTO(client, contacts, addresses);
     }
 
     @Override
-    public ArrayList<FullInvoiceDTO> getAll(boolean test) {
+    public ArrayList<FullClientDTO> getAll(boolean test) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public int create(FullInvoiceDTO invoice, boolean test) {
-        return 0;
-    }
-
-    @Override
-    public boolean update(FullInvoiceDTO invoice, boolean test) {
+    public int create(FullClientDTO client, boolean test) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean delete(FullInvoiceDTO invoice, boolean test) {
+    public boolean update(FullClientDTO client, boolean test) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean delete(FullClientDTO client, boolean test) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    
-
 }

@@ -12,9 +12,9 @@ import java.util.ArrayList;
  * @author owen
  */
 public interface InvoiceServiceInterface {
-    FullInvoiceDTO getById(int id);
-    ArrayList<FullInvoiceDTO> getAll();
-    int create(FullInvoiceDTO invoice);     // returns new id
-    boolean update(FullInvoiceDTO invoice);
-    boolean delete(FullInvoiceDTO invoice);
+    FullInvoiceDTO getById(int id, boolean test);
+    ArrayList<FullInvoiceDTO> getAll(boolean test);
+    int create(FullInvoiceDTO invoice, boolean test);     // returns new id
+    boolean update(FullInvoiceDTO invoice, boolean test);
+    boolean delete(FullInvoiceDTO invoice, boolean test);
 }

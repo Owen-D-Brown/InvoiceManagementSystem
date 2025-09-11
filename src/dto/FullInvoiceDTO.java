@@ -6,13 +6,7 @@ package dto;
 
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import model.Client;
-import model.Contact;
-import model.Invoice;
-import model.InvoiceDetail;
-import model.PONumber;
+
 
 /**
  *
@@ -20,114 +14,48 @@ import model.PONumber;
  */
 public class FullInvoiceDTO {
     
-    private Invoice invoice;
-    private Client client;
-    private Contact contact;
-    private List<InvoiceDetail> invoiceDetails;
-    //private PONumber poNumber;
-    //address
+    private InvoiceHeaderDTO invoiceHeader;
+    private ArrayList<InvoiceItemDTO> invoiceItems;
+    private InvoiceFooterDTO invoiceFooter;
 
-    public FullInvoiceDTO(Invoice invoice, Client client, Contact contact, List<InvoiceDetail> invoiceDetails) {
-        this.invoice = invoice;
-        this.client = client;
-        this.contact = contact;
-        this.invoiceDetails = invoiceDetails;
-    }
-    
-    public FullInvoiceDTO() { };
-
-    //Invoice Number
-    public int getInvoiceNumber() {
-        return invoice.getInvoiceNumber();
+    public FullInvoiceDTO() {
     }
 
-    //Invoice Date
-    public Date getInvoiceDate() {
-        return invoice.getInvoiceDate();
+    public FullInvoiceDTO(InvoiceHeaderDTO invoiceHeader, ArrayList<InvoiceItemDTO> invoiceItems, InvoiceFooterDTO invoiceFooter) {
+        this.invoiceHeader = invoiceHeader;
+        this.invoiceItems = invoiceItems;
+        this.invoiceFooter = invoiceFooter;
     }
 
-    public void setInvoiceDate(Date invoiceDate) {
-        invoice.setInvoiceDate(invoiceDate);
+    public InvoiceHeaderDTO getInvoiceHeader() {
+        return invoiceHeader;
     }
 
-    //Invoice Due Date
-    public Date getInvoiceDueDate() {
-        return invoice.getInvoiceDueDate();
+    public void setInvoiceHeader(InvoiceHeaderDTO invoiceHeader) {
+        this.invoiceHeader = invoiceHeader;
     }
 
-    public void setInvoiceDueDate(Date invoiceDueDate) {
-        invoice.setInvoiceDueDate(invoiceDueDate);
+    public ArrayList<InvoiceItemDTO> getInvoiceItems() {
+        return invoiceItems;
     }
 
-    //Invoice Booking Date
-    public Date getInvoiceBookingDate() {
-        return invoice.getInvoiceBookingDate();
+    public void setInvoiceItems(ArrayList<InvoiceItemDTO> invoiceItems) {
+        this.invoiceItems = invoiceItems;
     }
 
-    public void setInvoiceBookingDate(Date invoiceBookingDate) {
-        invoice.setInvoiceBookingDate(invoiceBookingDate);
+    public InvoiceFooterDTO getInvoiceFooter() {
+        return invoiceFooter;
     }
 
-    //Invoice Subtotal
-    public float getInvoiceSubtotal() {
-        return invoice.getInvoiceSubtotal();
-    }
-
-    public void setInvoiceSubtotal(float invoiceSubtotal) {
-        invoice.setInvoiceSubtotal(invoiceSubtotal);
-    }
-
-    //Is Invoice Paid
-    public boolean isInvoicePaid() {
-        return invoice.isInvoicePaid();
-    }
-
-    public void setInvoicePaid(boolean invoicePaid) {
-        invoice.setInvoicePaid(invoicePaid);
-    }
-
-    //Invoice Notes
-    public String getInvoiceNotes() {
-        return invoice.getInvoiceNotes();
-    }
-
-    public void setInvoiceNotes(String invoiceNotes) {
-        invoice.setInvoiceNotes(invoiceNotes);
-    }
-
-    //Client
-    public Client getClient() {
-        return this.client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-        invoice.setClientID(client.getClientID());
-    }
-
-    //Contact
-    public Contact getContact() {
-        return this.contact;
-    }
-
-    //There must be a rule here that does not allow contacts that don't belong to the client to be added to invoices
-    public void setContact(Contact contact) {
-        this.contact = contact;
-        invoice.setContactID(contact.getContactID());
-    }
-    
-    public void updateInvoiceDetail(List<InvoiceDetail> invoiceDetails) {
-        this.invoiceDetails = invoiceDetails;
-    }
-    
-    public List<InvoiceDetail> getInvoiceDetails() {
-        return this.invoiceDetails;
+    public void setInvoiceFooter(InvoiceFooterDTO invoiceFooter) {
+        this.invoiceFooter = invoiceFooter;
     }
 
     @Override
     public String toString() {
-        return "FullInvoiceDTO{" + "invoice=" + invoice + ", client=" + client + ", contact=" + contact + ", invoiceDetails=" + invoiceDetails + '}';
+        return "FullInvoiceDTO{" + "invoiceHeader=" + invoiceHeader + ", invoiceItems=" + invoiceItems + ", invoiceFooter=" + invoiceFooter + '}';
     }
+    
  
     
 }
