@@ -96,6 +96,9 @@ public class InvoiceTableModelFactory {
                 default -> "";
             };
         }
+        
+        
+        
     }
     
 }

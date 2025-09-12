@@ -5,15 +5,16 @@
 package Controller;
 
 import dto.FullInvoiceDTO;
+import service.implementations.InvoiceService;
 
 /**
  *
  * @author owen
  */
 public class InvoiceController {
-    
+    private InvoiceService invoiceService = new InvoiceService();
     public FullInvoiceDTO getDisplayInvoice(int id, boolean test) {
-        return null;
+        return invoiceService.getFullInvoiceById(id, test);
     }
     
 }

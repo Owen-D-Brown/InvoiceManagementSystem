@@ -1152,7 +1152,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2.setBounds(50, 59, 680, 930);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 1920, 1080);
+        jPanel1.setBounds(-310, -20, 1920, 1080);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1874,6 +1874,7 @@ public void setItemDetails() throws SQLException {
   //
   ArrayList<String[]> loadedDetails = new ArrayList();
   
+  //for investigage
    public DefaultTableModel searchTable(String table) throws SQLException {
     DriverManager.registerDriver(new org.sqlite.JDBC());
     Connection conn = DriverManager.getConnection(url);
@@ -1925,7 +1926,7 @@ public void setItemDetails() throws SQLException {
 }
 
 
-    
+    //for delete
     //I need to create dictionary of menu names and keys of ItemID
     Map<String, String> menuMap = new HashMap();
     public void populateInvoiceDetailHashMap() throws SQLException {
@@ -1945,6 +1946,8 @@ public void setItemDetails() throws SQLException {
         
     }
 
+    
+    //for delete
    public void updateInvoiceDetails(String invoiceNo) throws SQLException {
         
         //Establish the connection
@@ -1973,6 +1976,7 @@ public void setItemDetails() throws SQLException {
         conn.close();
     }
    
+   //for delete
    public void updateInvoice(String invoiceNo) throws SQLException {
         populateAddressMap();
         populateClientMap();
@@ -2016,6 +2020,8 @@ public void setItemDetails() throws SQLException {
             System.out.println(clientMap.get((String) clientCombo.getSelectedItem()));
         }*/
    }
+   
+   //for delete
     Map<String, String> addressMap = new HashMap();
     public void populateAddressMap() throws SQLException {
         //Establish the connection
@@ -2032,6 +2038,7 @@ public void setItemDetails() throws SQLException {
         rs.close();
     }
     
+    //for delete
     Map<String, String> clientMap = new HashMap();
     public void populateClientMap() throws SQLException {
          //Establish the connection
@@ -2048,6 +2055,7 @@ public void setItemDetails() throws SQLException {
         rs.close();
     }
     
+    //for deletion
     Map<String, String> contactMap = new HashMap();
     public void populateContactMap() throws SQLException {
          //Establish the connection
@@ -2063,6 +2071,7 @@ public void setItemDetails() throws SQLException {
         rs.close();
     }
     
+    //for deletion
     public void deleteInvoice(String invoiceNo) throws SQLException {
         //Establish the connection
         DriverManager.registerDriver(new org.sqlite.JDBC());
