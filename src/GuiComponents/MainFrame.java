@@ -4,6 +4,9 @@
  */
 package GuiComponents;
 
+import Controller.InvoiceController;
+import GuiFactories.InvoiceTableModelFactory;
+import dto.FullInvoiceDTO;
 import guiapplication.GuiApplication;
 import static guiapplication.GuiApplication.frame;
 import static guiapplication.GuiApplication.url;
@@ -63,12 +66,19 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    
+    InvoiceController invoiceController = new InvoiceController(this);
     public MainFrame() {
         initComponents();
  
       
         jTable1.getSelectionModel().setSelectionInterval(1, 1);
         
+    }
+    
+    public void updateViewInvoicePanel() {
+        viewInvoicePanel.revalidate();
+        viewInvoicePanel.repaint();
     }
 
     /**
@@ -269,48 +279,40 @@ public class MainFrame extends javax.swing.JFrame {
 
         try {
             jTable1.setModel(GuiApplication.populateTable("Invoices"));
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        jTable1.getSelectionModel().setSelectionInterval( 1, 1 );
+        jTable1.getSelectionModel().addListSelectionListener(e -> {
+            // Skip intermediate adjusting events unless you really want them
+            if (e.getValueIsAdjusting()) return;
 
-        ListSelectionModel cellSelectionModel = jTable1.getSelectionModel();
-        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                int viewRow = jTable1.getSelectedRow();
+                if (viewRow < 0) return;
 
-            public void valueChanged(ListSelectionEvent e) {
-
+                // Find "InvoiceNumber" column (fallback to 0 if not found)
+                int viewCol;
                 try {
-                    //Setting information label information
-                    clientName.setText(GuiApplication.getClient());
-                    streetAddress.setText(GuiApplication.getClientAddy("StreetAddress"));
-                    areaAddress.setText(GuiApplication.getClientAddy("AreaAddress"));
-                    eircode.setText(GuiApplication.getClientAddy("ClientEircode"));
-                    countyAddress.setText(GuiApplication.getClientAddy("ClientCounty"));
-                    invoiceNo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-                    invoiceDate.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
-                    poNumber.setText(GuiApplication.getPONumber());
-                    invoiceDueDate.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
-                    contactNameLabel.setText(GuiApplication.getContact());
-
-                    //Setting the table model
-                    jTable2.setModel(searchTable("InvoiceDetails"));
-                    System.out.println("scroll pane debug "+jTable2.getRowCount()*jTable2.getRowHeight());
-                    jScrollPane2.setSize(new Dimension(587, ((6*jTable2.getRowHeight())+jTable2.getTableHeader().getHeight())));
-                }catch (Exception e3)   {
-                    e3.printStackTrace();
+                    viewCol = jTable1.getColumnModel().getColumnIndex("InvoiceNumber");
+                } catch (IllegalArgumentException ex) {
+                    viewCol = 0;
                 }
 
-                viewInvoicePanel.repaint();
-                viewInvoicePanel.revalidate();
+                int modelRow = jTable1.convertRowIndexToModel(viewRow);
+                int modelCol = jTable1.convertColumnIndexToModel(viewCol);
+                Object cell = jTable1.getModel().getValueAt(modelRow, modelCol);
 
+                int invoiceNumber;
                 try {
-                    GuiApplication.getClient();
-                } catch (Exception e2) {
-                    e2.printStackTrace();
+                    invoiceNumber = Integer.parseInt(String.valueOf(cell).trim());
+                } catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                    return;
                 }
-            }
 
+                invoiceController.populateViewInvoiceOnTableChange(invoiceNumber);
+            });
         });
         jTable1.setPreferredSize(new java.awt.Dimension(710, 1000));
         jTable1.setTableHeader(new InvoicesTableHeader(jTable1.getColumnModel()));
@@ -1152,7 +1154,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2.setBounds(50, 59, 680, 930);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(-310, -20, 1920, 1080);
+        jPanel1.setBounds(-50, -50, 1920, 1080);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
