@@ -44,7 +44,7 @@ public class InvoiceServiceTest {
     @Test
     public void testGetById() {
        InvoiceService service = new InvoiceService();
-      FullInvoiceDTO fidto = service.getById(1, true);
+      FullInvoiceDTO fidto = service.getFullInvoiceById(1, true);
       System.out.println(fidto);
     }
 

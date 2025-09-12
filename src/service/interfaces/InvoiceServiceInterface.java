@@ -6,15 +6,19 @@ package service.interfaces;
 
 import dto.FullInvoiceDTO;
 import java.util.ArrayList;
+import model.Invoice;
 
 /**
  *
  * @author owen
  */
 public interface InvoiceServiceInterface {
-    FullInvoiceDTO getById(int id, boolean test);
+    FullInvoiceDTO getFullInvoiceById(int id, boolean test);
+    Invoice getListViewInvoiceById(int id, boolean test);
+    
     ArrayList<FullInvoiceDTO> getAll(boolean test);
     int create(FullInvoiceDTO invoice, boolean test);     // returns new id
     boolean update(FullInvoiceDTO invoice, boolean test);
     boolean delete(FullInvoiceDTO invoice, boolean test);
+    
 }

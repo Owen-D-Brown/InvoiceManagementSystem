@@ -6,12 +6,15 @@ package service.implementations;
 
 import dao.Implementations.ClientDAO;
 import dao.Implementations.ContactDAO;
+import dao.Implementations.DisplayInvoiceDAO;
 import dao.Implementations.InvoiceDAO;
 import dao.Implementations.InvoiceDetailDAO;
 import dto.FullInvoiceDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.Client;
 import model.Contact;
 import model.Invoice;
@@ -24,15 +27,27 @@ import service.interfaces.InvoiceServiceInterface;
  */
 public class InvoiceService implements InvoiceServiceInterface {
 
+    private final Map<Integer, FullInvoiceDTO> cache = new HashMap<>();
     
     InvoiceDAO invoiceDAO = new InvoiceDAO();
     ClientDAO clientDAO = new ClientDAO();
     ContactDAO contactDAO = new ContactDAO();
     InvoiceDetailDAO invoiceDetailsDAO = new InvoiceDetailDAO(); 
+    DisplayInvoiceDAO displayInvoiceDAO = new DisplayInvoiceDAO();
 
     @Override
-    public FullInvoiceDTO getById(int id, boolean test) {
- return null;
+    public FullInvoiceDTO getFullInvoiceById(int id, boolean test) {
+        if(cache.containsKey(id)) {
+            return cache.get(id);
+        } else {
+            FullInvoiceDTO returnVal = displayInvoiceDAO.getByInvoiceNumber(id, test);
+            if(returnVal != null) {
+                cache.put(id, returnVal);
+                return returnVal;
+            } else {
+                return null;
+            }
+        }
     }
 
     @Override
@@ -52,6 +67,11 @@ public class InvoiceService implements InvoiceServiceInterface {
 
     @Override
     public boolean delete(FullInvoiceDTO invoice, boolean test) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Invoice getListViewInvoiceById(int id, boolean test) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
