@@ -17,4 +17,5 @@ public interface InvoiceDetailDAOInterface extends BaseDAOInterface<InvoiceDetai
     ArrayList<InvoiceDetail> getByInvoiceNumber(int number);
     
     boolean deleteByInvoiceNumber(Invoice t, boolean test) throws SQLException;
+    boolean updateByInvoiceNumber(ArrayList<InvoiceDetail> details, int invoiceNo, boolean test) throws SQLException;
 }

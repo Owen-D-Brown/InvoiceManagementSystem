@@ -28,7 +28,7 @@ public class InvoiceController {
     }
     
     public void populateViewInvoiceOnTableChange(int invoiceNo) {
-        System.out.println("firing");
+     
         FullInvoiceDTO invoice = getDisplayInvoice(invoiceNo, false);
         TableModel details = InvoiceTableModelFactory.getInvoiceDetailTableModel(invoice.getInvoiceItems());
         

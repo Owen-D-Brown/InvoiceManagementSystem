@@ -7,6 +7,8 @@ package service.interfaces;
 import dto.FullInvoiceDTO;
 import java.util.ArrayList;
 import model.Invoice;
+import java.sql.SQLException;
+import model.InvoiceDetail;
 
 /**
  *
@@ -18,7 +20,7 @@ public interface InvoiceServiceInterface {
     
     ArrayList<FullInvoiceDTO> getAll(boolean test);
     int create(FullInvoiceDTO invoice, boolean test);     // returns new id
-    boolean update(FullInvoiceDTO invoice, boolean test);
+    FullInvoiceDTO update(Invoice invoice,ArrayList<InvoiceDetail> details, boolean test) throws SQLException;
     boolean delete(FullInvoiceDTO invoice, boolean test);
     
 }

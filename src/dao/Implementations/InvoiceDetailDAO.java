@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import model.Contact;
 import model.Invoice;
@@ -203,6 +204,32 @@ public class InvoiceDetailDAO implements InvoiceDetailDAOInterface {
             return stmt.executeUpdate() == 1;
         }      
     }
+
+    @Override
+    public boolean updateByInvoiceNumber(ArrayList<InvoiceDetail> details, int invoiceNo, boolean test) throws SQLException {
+        String sql = "DELETE * from InvoiceDetails WHERE InvoiceNumber = ?"; 
+        String uSql ="INSERT INTO InvoiceDetails " +
+                     "(InvoiceNumber, ItemID, ItemQuantity) " +
+                     "VALUES (?, ?, ?)";
+        try (
+            java.sql.Connection conn = test 
+            ? DatabasePipeline.openTestConnection()
+            : DatabasePipeline.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement uStmt = conn.prepareStatement(uSql)
+        ) 
+        {
+            stmt.setInt(1, invoiceNo);
+            stmt.executeUpdate();
+            for(InvoiceDetail d : details) {
+                uStmt.setInt(1, invoiceNo);
+                uStmt.setInt(2, d.getItemID());
+                uStmt.setInt(3, d.getItemQuantity());
+                uStmt.executeUpdate();
+                
+            }
+            return true;
+        }       }
     
     
 }

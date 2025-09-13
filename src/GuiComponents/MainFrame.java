@@ -1359,20 +1359,20 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
 
         try {
-            updateInvoiceDetails(editInvoiceNo.getText());
-            updateInvoice(editInvoiceNo.getText());
+            updateInvoiceDetails(editInvoiceNo.getText());//just db
+            updateInvoice(editInvoiceNo.getText());//just db
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            jTable1.setModel(GuiApplication.populateTable("Invoices"));
-            jTable1.getSelectionModel().setSelectionInterval( 1, 1 );
+            jTable1.setModel(GuiApplication.populateTable("Invoices"));//refreshing the table
+            jTable1.getSelectionModel().setSelectionInterval( 1, 1 );//refreshing the table
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        CardLayout layout = (CardLayout) jPanel2.getLayout();
-        layout.show(jPanel2, "viewInvoice");
+        }//missing update view
+        CardLayout layout = (CardLayout) jPanel2.getLayout();//switch to view
+        layout.show(jPanel2, "viewInvoice");//switch to view
         //jTable1.getSelectionModel().setSelectionInterval( 1, 1 );
     }//GEN-LAST:event_jButton8ActionPerformed
 

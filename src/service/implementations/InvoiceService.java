@@ -35,18 +35,23 @@ public class InvoiceService implements InvoiceServiceInterface {
     InvoiceDetailDAO invoiceDetailsDAO = new InvoiceDetailDAO(); 
     DisplayInvoiceDAO displayInvoiceDAO = new DisplayInvoiceDAO();
 
+    private FullInvoiceDTO checkCache(int invoiceNo) {
+         if(cache.containsKey(invoiceNo)) {
+            return cache.get(invoiceNo);
+        } else {
+             return null;
+         }
+    }
+    
     @Override
     public FullInvoiceDTO getFullInvoiceById(int id, boolean test) {
-        if(cache.containsKey(id)) {
-            return cache.get(id);
+        FullInvoiceDTO invoice = checkCache(id);
+        if(invoice !=null) {
+            return invoice;
         } else {
-            FullInvoiceDTO returnVal = displayInvoiceDAO.getByInvoiceNumber(id, test);
-            if(returnVal != null) {
-                cache.put(id, returnVal);
-                return returnVal;
-            } else {
-                return null;
-            }
+            invoice = displayInvoiceDAO.getByInvoiceNumber(id, test);
+            cache.put(id, invoice);
+            return invoice;
         }
     }
 
@@ -61,8 +66,13 @@ public class InvoiceService implements InvoiceServiceInterface {
     }
 
     @Override
-    public boolean update(FullInvoiceDTO invoice, boolean test) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public FullInvoiceDTO update(Invoice invoice,ArrayList<InvoiceDetail> details, boolean test) throws SQLException {
+        invoiceDAO.update(invoice, test);
+        invoiceDetailsDAO.updateByInvoiceNumber(details, invoice.getInvoiceNumber(), test);
+        FullInvoiceDTO updatedInvoice = displayInvoiceDAO.getByInvoiceNumber(invoice.getInvoiceNumber(), test);
+        cache.remove(invoice.getInvoiceNumber());
+        cache.put(invoice.getInvoiceNumber(), updatedInvoice);
+        return updatedInvoice;
     }
 
     @Override
