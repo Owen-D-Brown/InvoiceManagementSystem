@@ -84,6 +84,7 @@ public class InvoiceService implements InvoiceServiceInterface {
     public Invoice getListViewInvoiceById(int id, boolean test) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+   
     
     
 

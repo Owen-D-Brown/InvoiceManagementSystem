@@ -48,6 +48,7 @@ public class InvoiceDAO implements InvoiceDAOInterface {
                 String notes = rs.getString("InvoiceNotes");
                 int clientId = rs.getInt("ClientID");
                 int contactId = rs.getInt("ContactID");
+                int poNumberID = rs.getInt("PONumberID");
 
                 return new Invoice(
                     invoiceNumber,
@@ -59,7 +60,8 @@ public class InvoiceDAO implements InvoiceDAOInterface {
                     paid,
                     notes,
                     clientId,
-                    contactId
+                    contactId,
+                    poNumberID
                 );
             } else {
                 //throw error no client found;
@@ -95,6 +97,7 @@ try (
                 String notes = rs.getString("InvoiceNotes");
                 int clientId = rs.getInt("ClientID");
                 int contactId = rs.getInt("ContactID");
+                int poNumberID = rs.getInt("PONumberID");
 
                 Invoice i = new Invoice(
                     invoiceNumber,
@@ -106,7 +109,8 @@ try (
                     paid,
                     notes,
                     clientId,
-                    contactId
+                    contactId,
+                    poNumberID
                 );
                 is.add(i);
             }

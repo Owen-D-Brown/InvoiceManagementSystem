@@ -80,7 +80,7 @@ public class DisplayInvoiceDAO implements DisplayInvoiceDAOInterface {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) return null; // not found
 
-                // ----- Header (first row only) -----
+            
                 FullInvoiceDTO dto = new FullInvoiceDTO();
                 InvoiceHeaderDTO headerDto = new InvoiceHeaderDTO();
                 InvoiceFooterDTO footerDto = new InvoiceFooterDTO();
@@ -92,7 +92,7 @@ public class DisplayInvoiceDAO implements DisplayInvoiceDAOInterface {
                 footerDto.setInvoiceNotes(rs.getString("invoice_notes"));
                 headerDto.setClientName(rs.getString("client_name"));
 
-                // Contact name = first + " " + last (you said these are never null)
+          
                 String first = rs.getString("contact_Fname");
                 String last  = rs.getString("contact_Lname");
                 headerDto.setContactName(first + " " + last);
@@ -100,7 +100,6 @@ public class DisplayInvoiceDAO implements DisplayInvoiceDAOInterface {
                 headerDto.setAddress(rs.getString("address"));
                 headerDto.setPoNumber(getStringOrZero(rs,"po_number"));
 
-                // ----- Lines (include the current row) -----
                 ArrayList<InvoiceItemDTO> lines = new ArrayList<>();
                 float subtotal = 0f;
 

@@ -8,11 +8,13 @@ import dao.Implementations.ClientAddressDAO;
 import dao.Implementations.ClientDAO;
 import dao.Implementations.ContactDAO;
 import dto.FullClientDTO;
+import dto.FullContactDTO;
 import java.util.ArrayList;
 import model.Client;
 import model.ClientAddress;
 import model.Contact;
 import service.interfaces.ClientServiceInterface;
+import java.sql.SQLException;
 
 /**
  *
@@ -25,9 +27,9 @@ public class ClientService implements ClientServiceInterface {
     ClientAddressDAO addressDAO = new ClientAddressDAO();
     
     @Override
-    public FullClientDTO getById(int id, boolean test) {
+    public FullClientDTO getById(int id, boolean test) throws SQLException {
         Client client = clientDAO.getById(id);
-        ArrayList<Contact> contacts = contactDAO.getByClientId(id);
+        ArrayList<FullContactDTO> contacts = contactDAO.getFullContactDTOsForClient(id, test);
         ArrayList<ClientAddress> addresses = addressDAO.getByClientId(id);
         return new FullClientDTO(client, contacts, addresses);
     }
