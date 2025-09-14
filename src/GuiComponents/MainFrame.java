@@ -1359,8 +1359,8 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
 
         try {
-            updateInvoiceDetails(editInvoiceNo.getText());//just db
-            updateInvoice(editInvoiceNo.getText());//just db
+            updateInvoiceDetails(editInvoiceNo.getText());//just db - set boxes
+            updateInvoice(editInvoiceNo.getText());//just db - set box
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1641,7 +1641,7 @@ public String[] getAddContacts() throws SQLException {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel InvoicePanelHeader;
-    private javax.swing.JComboBox<String> PONumberCombo;
+    public javax.swing.JComboBox<String> PONumberCombo;
     private javax.swing.JComboBox<String> addAddressCombo;
     public javax.swing.JComboBox<String> addClientCombo;
     public javax.swing.JComboBox<String> addContactCombo;
@@ -1650,7 +1650,7 @@ public String[] getAddContacts() throws SQLException {
     private javax.swing.JLabel addInvoiceNo;
     private javax.swing.JPanel addInvoicePanel;
     public javax.swing.JLabel areaAddress;
-    private javax.swing.JComboBox<String> clientAddressCombo;
+    public javax.swing.JComboBox<String> clientAddressCombo;
     public javax.swing.JComboBox<String> clientCombo;
     private javax.swing.JLabel clientLabel;
     private javax.swing.JLabel clientLabel1;
@@ -1659,9 +1659,9 @@ public String[] getAddContacts() throws SQLException {
     public javax.swing.JComboBox<String> contactCombo;
     public javax.swing.JLabel contactNameLabel;
     public javax.swing.JLabel countyAddress;
-    private javax.swing.JTextField editDate;
-    private javax.swing.JTextField editDueDate;
-    private javax.swing.JLabel editInvoiceNo;
+    public javax.swing.JTextField editDate;
+    public javax.swing.JTextField editDueDate;
+    public javax.swing.JLabel editInvoiceNo;
     private javax.swing.JPanel editInvoicePanel;
     public javax.swing.JLabel eircode;
     public javax.swing.JLabel invoiceDate;

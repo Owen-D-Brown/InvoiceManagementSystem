@@ -24,6 +24,7 @@ public class EditInvoiceController {
     }
     
     public void updateInvoice(InvoiceController ctl) {
+        
         //create invioce from edit invoice elements
         ArrayList<InvoiceItemDTO> details = fullInvoice.getInvoiceItems();
         Invoice invoice = new Invoice();

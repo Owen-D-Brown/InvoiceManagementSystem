@@ -16,15 +16,25 @@ import model.Contact;
 public class FullClientDTO {
     
     private Client client;
-    private List<Contact> contacts;
+    private List<FullContactDTO> contacts;
     private List<ClientAddress> clientAddresses;
+    
     
     public FullClientDTO() { };
 
-    public FullClientDTO(Client client, List<Contact> contacts, List<ClientAddress> clientAddresses) {
+    public FullClientDTO(Client client, List<FullContactDTO> contacts, List<ClientAddress> clientAddresses) {
         this.client = client;
         this.contacts = contacts;
         this.clientAddresses = clientAddresses;
+    }
+    
+    public FullContactDTO getContactByID(int id) {
+        for(FullContactDTO contact : contacts) {
+            if(contact.getContact().getContactID() == id) {
+                return contact;
+            }
+        }
+        return null;
     }
 
     public Client getClient() {
@@ -35,11 +45,11 @@ public class FullClientDTO {
         this.client = client;
     }
 
-    public List<Contact> getContacts() {
+    public List<FullContactDTO> getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(List<FullContactDTO> contacts) {
         this.contacts = contacts;
     }
 

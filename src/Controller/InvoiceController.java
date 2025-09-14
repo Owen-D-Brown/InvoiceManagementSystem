@@ -6,9 +6,17 @@ package Controller;
 
 import GuiComponents.MainFrame;
 import GuiFactories.InvoiceTableModelFactory;
+import dto.FullClientDTO;
+import dto.FullContactDTO;
 import dto.FullInvoiceDTO;
 import java.text.SimpleDateFormat;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.TableModel;
+import model.ClientAddress;
+import model.Contact;
+import model.Invoice;
+import model.PONumber;
+import service.implementations.ClientService;
 import service.implementations.InvoiceService;
 
 /**
@@ -17,6 +25,7 @@ import service.implementations.InvoiceService;
  */
 public class InvoiceController {
     private InvoiceService invoiceService = new InvoiceService();
+    private ClientService clientService = new ClientService();
     MainFrame frame;
     
     public InvoiceController(MainFrame instance) {
@@ -48,6 +57,98 @@ public class InvoiceController {
         frame.updateViewInvoicePanel();
     }
     
+    int currentRowCount = 0;
+    
+    public void swapToEditView(int invoiceNo) {
+        
+        //Get invoice and client info
+        Invoice invoice = invoiceService.getListViewInvoiceById(invoiceNo, false);
+        FullClientDTO client = clientService.getById(invoice.getContactID(), true);
+        
+        int clientId = invoice.getClientID();
+        int contactId = invoice.getContactID();
+        int poNumberId = invoice.getPoNumberID();
+        
+        //Setting box information
+        frame.editInvoiceNo.setText(frame.invoiceNo.getText());
+        frame.editDueDate.setText(frame.invoiceDueDate.getText());
+        frame.editDate.setText(frame.invoiceDate.getText());
+        
+        
+        //Populate Contacts for Client
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (FullContactDTO contact : client.getContacts()) {
+            model.addElement(contact.getContact().getContactFirstName()+" "+contact.getContact().getContactLastName()); // or toString()
+        
+        frame.contactCombo.setModel(model);
+        frame.contactCombo.setSelectedItem(frame.contactNameLabel.getText());
+        }
+        
+
+        //Populate PONumbers for Contact
+        DefaultComboBoxModel<String> poModel = new DefaultComboBoxModel<>();
+        
+        FullContactDTO c = client.getContactByID(contactId);
+        for(PONumber no : c.getPoNumbers()) {
+            poModel.addElement(no.getPONumber());
+            if(no.getPONumberID() == poNumberId) {
+                frame.PONumberCombo.setSelectedItem(no);
+            }
+        }
+        frame.PONumberCombo.setModel(poModel);
+        
+        //Populating Addresses for Client
+        DefaultComboBoxModel<String> addModel = new DefaultComboBoxModel<>();
+        
+        
+        for(ClientAddress ca : client.getClientAddresses()) {
+            addModel.addElement(ca.getClientPrintAddress());
+           
+        }
+        frame.clientAddressCombo.setModel(poModel);
+        frame.clientAddressCombo.setSelectedItem(frame.streetAddress.getText());
+        
+        
+        //set details table
+        
+        
+        CardLayout layout = (CardLayout) jPanel2.getLayout();
+        layout.show(jPanel2, "editInvoice");
+      currentRowCount = jTable3.getRowCount();
+        
+    }
+    
+    //edit invoice btn
+    /*
+     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       
+        
+        editInvoicePanel.revalidate();
+        editInvoicePanel.repaint();
+        try {
+            
+            
+            
+    
+    
+            jTable3.setModel(searchTable("InvoiceDetails"));//populates details table
+    
+    
+            jScrollPane3.setSize(new Dimension(587, ((jTable3.getRowCount()*jTable3.getRowHeight())+jTable3.getTableHeader().getHeight())));
+            
+
+    
+    
+          
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }                                        
+
+    */
     
     
 }

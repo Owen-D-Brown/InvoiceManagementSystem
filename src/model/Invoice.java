@@ -22,10 +22,11 @@ public class Invoice {
     private String invoiceNotes;
     private int clientID;
     private int contactID;
+    private int poNumberID;
 
     public Invoice() { }
 
-    public Invoice(int invoiceNumber, Date invoiceDate, Date invoiceDueDate, Date invoiceBookingDate, float invoiceSubtotal, float invoiceTotal, boolean invoicePaid, String invoiceNotes, int clientID, int contactID) {
+    public Invoice(int invoiceNumber, Date invoiceDate, Date invoiceDueDate, Date invoiceBookingDate, float invoiceSubtotal, float invoiceTotal, boolean invoicePaid, String invoiceNotes, int clientID, int contactID, int poNumberID) {
         this.invoiceNumber = invoiceNumber;
         this.invoiceDate = invoiceDate;
         this.invoiceDueDate = invoiceDueDate;
@@ -36,6 +37,15 @@ public class Invoice {
         this.invoiceNotes = invoiceNotes;
         this.clientID = clientID;
         this.contactID = contactID;
+        this.poNumberID = poNumberID;
+    }
+
+    public int getPoNumberID() {
+        return poNumberID;
+    }
+
+    public void setPoNumberID(int poNumberID) {
+        this.poNumberID = poNumberID;
     }
 
     public int getInvoiceNumber() {
@@ -120,7 +130,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate + ", invoiceDueDate=" + invoiceDueDate + ", invoiceBookingDate=" + invoiceBookingDate + ", invoiceSubtotal=" + invoiceSubtotal + ", invoiceTotal=" + invoiceTotal + ", invoicePaid=" + invoicePaid + ", invoiceNotes=" + invoiceNotes + ", clientID=" + clientID + ", contactID=" + contactID + '}';
+        return "Invoice{" + "invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate +  ", PONumberID=" + poNumberID + ", invoiceDueDate=" + invoiceDueDate + ", invoiceBookingDate=" + invoiceBookingDate + ", invoiceSubtotal=" + invoiceSubtotal + ", invoiceTotal=" + invoiceTotal + ", invoicePaid=" + invoicePaid + ", invoiceNotes=" + invoiceNotes + ", clientID=" + clientID + ", contactID=" + contactID + '}';
     }
     
     
