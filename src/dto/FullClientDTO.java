@@ -30,6 +30,7 @@ public class FullClientDTO {
     
     public FullContactDTO getContactByID(int id) {
         for(FullContactDTO contact : contacts) {
+            System.out.println(contact.getContact().getContactID());
             if(contact.getContact().getContactID() == id) {
                 return contact;
             }

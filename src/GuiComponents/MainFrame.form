@@ -114,7 +114,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="jTable1">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;} catch (Exception e) {&#xa;e.printStackTrace();&#xa;}&#xa;jTable1.getSelectionModel().addListSelectionListener(e -&gt; {&#xa;    // Skip intermediate adjusting events unless you really want them&#xa;    if (e.getValueIsAdjusting()) return;&#xa;&#xa;    javax.swing.SwingUtilities.invokeLater(() -&gt; {&#xa;        int viewRow = jTable1.getSelectedRow();&#xa;        if (viewRow &lt; 0) return;&#xa;&#xa;        // Find &quot;InvoiceNumber&quot; column (fallback to 0 if not found)&#xa;        int viewCol;&#xa;        try {&#xa;            viewCol = jTable1.getColumnModel().getColumnIndex(&quot;InvoiceNumber&quot;);&#xa;        } catch (IllegalArgumentException ex) {&#xa;            viewCol = 0;&#xa;        }&#xa;&#xa;        int modelRow = jTable1.convertRowIndexToModel(viewRow);&#xa;        int modelCol = jTable1.convertColumnIndexToModel(viewCol);&#xa;        Object cell = jTable1.getModel().getValueAt(modelRow, modelCol);&#xa;&#xa;        int invoiceNumber;&#xa;        try {&#xa;            invoiceNumber = Integer.parseInt(String.valueOf(cell).trim());&#xa;        } catch (NumberFormatException nfe) {&#xa;            nfe.printStackTrace();&#xa;            return;&#xa;        }&#xa;&#xa;  &#xa;        invoiceController.populateViewInvoiceOnTableChange(invoiceNumber);&#xa;    });&#xa;});">
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;} catch (Exception e) {&#xa;e.printStackTrace();&#xa;}&#xa;jTable1.getSelectionModel().addListSelectionListener(e -&gt; {&#xa;    // Skip intermediate adjusting events unless you really want them&#xa;    if (e.getValueIsAdjusting()) return;&#xa;&#xa;    javax.swing.SwingUtilities.invokeLater(() -&gt; {&#xa;        int viewRow = jTable1.getSelectedRow();&#xa;        if (viewRow &lt; 0) return;&#xa;&#xa;        // Find &quot;InvoiceNumber&quot; column (fallback to 0 if not found)&#xa;        int viewCol;&#xa;        try {&#xa;            viewCol = jTable1.getColumnModel().getColumnIndex(&quot;InvoiceNumber&quot;);&#xa;        } catch (IllegalArgumentException ex) {&#xa;            viewCol = 0;&#xa;        }&#xa;&#xa;        int modelRow = jTable1.convertRowIndexToModel(viewRow);&#xa;        int modelCol = jTable1.convertColumnIndexToModel(viewCol);&#xa;        Object cell = jTable1.getModel().getValueAt(modelRow, modelCol);&#xa;&#xa;        int invoiceNumber;&#xa;        try {&#xa;            invoiceNumber = Integer.parseInt(String.valueOf(cell).trim());&#xa;        } catch (NumberFormatException nfe) {&#xa;            nfe.printStackTrace();&#xa;            return;&#xa;        }&#xa;        System.out.println(&quot;active invoice no: &quot;+invoiceNumber);&#xa;  &#xa;        invoiceController.populateViewInvoiceOnTableChange(invoiceNumber);&#xa;    });&#xa;});">
                       <Connection code="GuiApplication.populateTable(&quot;Invoices&quot;)" type="code"/>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -309,6 +309,9 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="50" y="59" width="680" height="930"/>
@@ -1459,6 +1462,9 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="editInvoicePanel">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
                   <CardConstraints cardName="editInvoice"/>
@@ -1543,6 +1549,7 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JScrollPane()"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                     <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="jScrollPane3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);"/>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                   </AuxValues>
@@ -1787,6 +1794,9 @@
                         <Property name="columns" type="int" value="20"/>
                         <Property name="rows" type="int" value="5"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>

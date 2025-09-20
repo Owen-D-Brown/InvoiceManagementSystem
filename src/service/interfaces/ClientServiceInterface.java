@@ -8,6 +8,7 @@ import dto.FullClientDTO;
 import dto.FullInvoiceDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Client;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  */
 public interface ClientServiceInterface {
     FullClientDTO getById(int id, boolean test) throws SQLException;
-    ArrayList<FullClientDTO> getAll(boolean test);
+    ArrayList<Client> getAll(boolean test);
     int create(FullClientDTO client, boolean test);     // returns new id
     boolean update(FullClientDTO client, boolean test);
     boolean delete(FullClientDTO client, boolean test); 

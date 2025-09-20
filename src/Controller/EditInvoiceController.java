@@ -25,7 +25,7 @@ public class EditInvoiceController {
     
     public void updateInvoice(InvoiceController ctl) {
         
-        //create invioce from edit invoice elements
+        /*create invioce from edit invoice elements
         ArrayList<InvoiceItemDTO> details = fullInvoice.getInvoiceItems();
         Invoice invoice = new Invoice();
         invoice.setClientID(fullInvoice.getInvoiceHeader().get);
@@ -39,7 +39,7 @@ public class EditInvoiceController {
         invoice.setInvoiceSubtotal(0);
         invoice.setInvoiceTotal(0);
         invoiceService.update(invoice, details, false);
-        
+        */
         
         //update jtable1
         ctl.populateViewInvoiceOnTableChange(0);//update view invoice

@@ -39,5 +39,10 @@ public class FullContactDTO {
     public void setPoNumbers(ArrayList<PONumber> poNumbers) {
         this.poNumbers = poNumbers;
     }
+
+    @Override
+    public String toString() {
+        return this.contact.getContactFirstName()+" "+this.getContact().getContactLastName();
+    }
     
 }

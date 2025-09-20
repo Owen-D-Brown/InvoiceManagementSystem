@@ -228,52 +228,50 @@ public class ContactDAO implements ContactDAOInterface {
         }      
     }
     
-    public ArrayList<FullContactDTO> getFullContactDTOsForClient(int clientid, boolean test) throws SQLException {
-        
-        String sql = "SELECT c.ContactID, c.ClientID, c.ContactFirstName, c.ContactLastName, " +
-                    "       c.ContactNumber, c.ContactEmail, " +
-                    "       GROUP_CONCAT(DISTINCT p.PONumber) AS po_numbers " +
-                    "FROM Contacts c " +
-                    "LEFT JOIN PONumbers p ON p.ContactID = c.ContactID " +
-                    "WHERE c.ClientID = ? " +
-                    "GROUP BY c.ContactID, c.ClientID, c.ContactFirstName, c.ContactLastName, " +
-                    "         c.ContactNumber, c.ContactEmail";
-        
-        try (
-            java.sql.Connection conn = test 
-            ? DatabasePipeline.openTestConnection()
-            : DatabasePipeline.openConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)
-            ) 
-          {
-            stmt.setInt(1, clientid);
-            ResultSet rs = stmt.executeQuery();
-            ArrayList<FullContactDTO> returns = new ArrayList<>();
-            
-            while(rs.next()) {
-                int contactID = rs.getInt("ContactID");
-                int clientID = rs.getInt("ClientID");
-                String firstName = rs.getString("ContactFirstName");
-                String lastName = rs.getString("ContactLastName");
-                String number = rs.getString("ContactNumber");
-                String email = rs.getString("ContactEmail");
-                Contact co = new Contact(contactID, clientID, firstName, lastName, number, email);
-                
-                
-                  // Build PO list from the aggregated CSV
-                String poCsv = rs.getString("po_numbers");
+public ArrayList<FullContactDTO> getFullContactDTOsForClient(int clientid, boolean test) throws SQLException {
+    String sql =
+        "SELECT c.ContactID, c.ClientID, c.ContactFirstName, c.ContactLastName, " +
+        "       c.ContactNumber, c.ContactEmail, " +
+        "       GROUP_CONCAT(DISTINCT p.PONumber) AS po_numbers " +
+        "FROM Contacts c " +
+        "LEFT JOIN PONumbers p ON p.ContactID = c.ContactID " +
+        "WHERE c.ClientID = ? " +
+        "GROUP BY c.ContactID, c.ClientID, c.ContactFirstName, c.ContactLastName, " +
+        "         c.ContactNumber, c.ContactEmail";
+
+    try (java.sql.Connection conn = test ? DatabasePipeline.openTestConnection()
+                                         : DatabasePipeline.openConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, clientid);
+
+        ArrayList<FullContactDTO> returns = new ArrayList<>();
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                int contactID   = rs.getInt("ContactID");
+                int clientID    = rs.getInt("ClientID");
+                String first    = rs.getString("ContactFirstName");
+                String last     = rs.getString("ContactLastName");
+                String number   = rs.getString("ContactNumber");
+                String email    = rs.getString("ContactEmail");
+
+                Contact contact = new Contact(contactID, clientID, first, last, number, email);
+
+                // Build the PO list (once)
                 ArrayList<PONumber> poList = new ArrayList<>();
+                String poCsv = rs.getString("po_numbers");
                 if (poCsv != null && !poCsv.isEmpty()) {
                     for (String po : poCsv.split(",")) {
-                        poList.add(new PONumber(0, contactID, po.trim())); 
-                        FullContactDTO dto = new FullContactDTO(co, poList);
-                        returns.add(dto);
+                        poList.add(new PONumber(0, contactID, po.trim()));
                     }
                 }
-                
+
+                // Add ONE DTO per contact
+                returns.add(new FullContactDTO(contact, poList));
             }
-            
-            return returns;
-        } 
+        }
+        return returns;
     }
+}
+
 }

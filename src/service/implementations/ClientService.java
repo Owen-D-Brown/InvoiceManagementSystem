@@ -30,13 +30,14 @@ public class ClientService implements ClientServiceInterface {
     public FullClientDTO getById(int id, boolean test) throws SQLException {
         Client client = clientDAO.getById(id);
         ArrayList<FullContactDTO> contacts = contactDAO.getFullContactDTOsForClient(id, test);
+     
         ArrayList<ClientAddress> addresses = addressDAO.getByClientId(id);
         return new FullClientDTO(client, contacts, addresses);
     }
 
     @Override
-    public ArrayList<FullClientDTO> getAll(boolean test) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ArrayList<Client> getAll(boolean test) {
+        return clientDAO.getAll();
     }
 
     @Override

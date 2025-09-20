@@ -107,7 +107,7 @@ public class ClientDAO implements ClientDAOInterface {
     }
 
     @Override
-    public List<Client> getAll() {
+    public ArrayList<Client> getAll() {
 try (
             java.sql.Connection conn = DatabasePipeline.openConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Clients")

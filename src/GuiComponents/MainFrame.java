@@ -310,6 +310,7 @@ public class MainFrame extends javax.swing.JFrame {
                     nfe.printStackTrace();
                     return;
                 }
+                System.out.println("active invoice no: "+invoiceNumber);
 
                 invoiceController.populateViewInvoiceOnTableChange(invoiceNumber);
             });
@@ -1195,40 +1196,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        //Setting box information
-        editInvoiceNo.setText(invoiceNo.getText());
-        editDueDate.setText(invoiceDueDate.getText());
-        editDate.setText(invoiceDate.getText());
+        try {
+            invoiceController.swapToEditView(Integer.parseInt(invoiceNo.getText()));
+        } catch (SQLException ex) {
+            System.getLogger(MainFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
         
-        editInvoicePanel.revalidate();
-        editInvoicePanel.repaint();
-        try {
-            
-            
-            clientCombo.setModel(new DefaultComboBoxModel(GuiApplication.getClients()));
-            clientCombo.setSelectedItem((clientName.getText()));
-            jTable3.setModel(searchTable("InvoiceDetails"));
-            jScrollPane3.setSize(new Dimension(587, ((jTable3.getRowCount()*jTable3.getRowHeight())+jTable3.getTableHeader().getHeight())));
-            contactCombo.setModel(new DefaultComboBoxModel(GuiApplication.getContacts()));
-            contactCombo.setSelectedItem(contactNameLabel.getText());
-            PONumberCombo.setModel(new DefaultComboBoxModel(GuiApplication.getPONumbers()));
-            if(PONumberCombo.getItemCount() > 0)
-                PONumberCombo.setSelectedIndex(0);
-           
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        TableColumn itemColumn = jTable3.getColumnModel().getColumn(0);
-        try {
-            itemColumn.setCellEditor(new DefaultCellEditor(populateItemDetail()));
-            setItemDetails();
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        CardLayout layout = (CardLayout) jPanel2.getLayout();
-        layout.show(jPanel2, "editInvoice");
-      currentRowCount = jTable3.getRowCount();
+        
+     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void clientAddressComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientAddressComboActionPerformed
@@ -1237,6 +1212,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 
     private void clientComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientComboActionPerformed
+        /*
         try {
             contactCombo.setModel(new DefaultComboBoxModel(GuiApplication.getContacts()));
             contactCombo.setSelectedItem(0);
@@ -1248,7 +1224,7 @@ public class MainFrame extends javax.swing.JFrame {
             clientAddressCombo.setSelectedIndex(0);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_clientComboActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -1263,13 +1239,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void contactComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactComboActionPerformed
-        try {
+/*    try {
             PONumberCombo.setModel(new DefaultComboBoxModel(GuiApplication.getPONumbers()));
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(PONumberCombo.getItemCount() > 0)
-            PONumberCombo.setSelectedIndex(0);
+            PONumberCombo.setSelectedIndex(0);*/
     }//GEN-LAST:event_contactComboActionPerformed
     int currentRowCount;
     ArrayList<String[]> items = new ArrayList<>();
@@ -1662,7 +1638,7 @@ public String[] getAddContacts() throws SQLException {
     public javax.swing.JTextField editDate;
     public javax.swing.JTextField editDueDate;
     public javax.swing.JLabel editInvoiceNo;
-    private javax.swing.JPanel editInvoicePanel;
+    public javax.swing.JPanel editInvoicePanel;
     public javax.swing.JLabel eircode;
     public javax.swing.JLabel invoiceDate;
     private javax.swing.JLabel invoiceDateLabel;
@@ -1764,7 +1740,7 @@ public String[] getAddContacts() throws SQLException {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1772,7 +1748,7 @@ public String[] getAddContacts() throws SQLException {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    public javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -1781,7 +1757,7 @@ public String[] getAddContacts() throws SQLException {
     public javax.swing.JTable jTable2;
     public javax.swing.JTable jTable3;
     public javax.swing.JTable jTable5;
-    private javax.swing.JTextArea jTextArea1;
+    public javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     public javax.swing.JLabel poNumber;
