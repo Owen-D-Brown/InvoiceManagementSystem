@@ -102,14 +102,61 @@ public class InvoiceController {
         }
     }
     
+    private void updateEditPONumberComboBox(FullContactDTO c) {
+        //Populate PONumbers for Contact
+        DefaultComboBoxModel<String> poModel = new DefaultComboBoxModel<>();
+        
+     
+        
+        if(c != null) {
+            if(!c.getPoNumbers().isEmpty()) {
+                for(PONumber no : c.getPoNumbers()) {
+                    poModel.addElement(no.getPONumber());
+                    System.out.println("Comparing: "+no+" | "+frame.poNumber.getText());
+                    if(no.equals(frame.poNumber.getText())) {
+                        frame.PONumberCombo.setSelectedItem(no);
+                    } else {
+                    }
+                }
+                frame.PONumberCombo.setModel(poModel);
+            } else {
+                frame.PONumberCombo.setModel((ComboBoxModel<String>) new DefaultTableModel());//empty
+            }
+        }
+    }
+    
+    private void updateEditAddressComboBox(FullClientDTO client) {
+          
+        //Populating Addresses for Client
+        DefaultComboBoxModel<String> addModel = new DefaultComboBoxModel<>();
+        System.out.println("CLIENT "+client);
+        
+        for(ClientAddress ca : client.getClientAddresses()) {
+            addModel.addElement(ca.getClientPrintAddress());
+           
+        }
+        frame.clientAddressCombo.setModel(addModel);
+        frame.clientAddressCombo.setSelectedItem(frame.streetAddress.getText());
+    }
+    
+    private void updateEditInvoiceDetailsTable(FullInvoiceDTO fullInvoice) {
+        TableModel details = InvoiceTableModelFactory.getInvoiceDetailTableModel(fullInvoice.getInvoiceItems());
+        frame.jTable3.setModel(details);
+        frame.jScrollPane3.setSize(new Dimension(587, ((frame.jTable3.getRowCount()*frame.jTable3.getRowHeight())+frame.jTable3.getTableHeader().getHeight())));
+
+        
+
+    } 
+    
     int currentRowCount = 0;
     
     public void swapToEditView(int invoiceNo) throws SQLException {
-        System.out.println("invoice number trying to be set "+invoiceNo);
+      
         //Get invoice and client info
         Invoice invoice = invoiceService.getListViewInvoiceById(invoiceNo, false);
         FullInvoiceDTO fullInvoice = invoiceService.getFullInvoiceById(invoiceNo, false);
-        FullClientDTO client = clientService.getById(invoice.getContactID(), false);
+        
+        FullClientDTO client = clientService.getById(invoice.getClientID(), false);
         
         int clientId = invoice.getClientID();
         int contactId = invoice.getContactID();
@@ -122,48 +169,17 @@ public class InvoiceController {
         
         updateEditClientComboBox();
         
-      
-        
         //Populate Contacts for Client
         updateEditContactComboBox();
         
-      
-
         //Populate PONumbers for Contact
-        DefaultComboBoxModel<String> poModel = new DefaultComboBoxModel<>();
-        System.out.println("client: "+client);
-        FullContactDTO c = client.getContactByID(contactId);//why is c null
+        updateEditPONumberComboBox(client.getContactByID(contactId));
         
-        if(c != null) {
-            if(!c.getPoNumbers().isEmpty()) {
-                for(PONumber no : c.getPoNumbers()) {
-                    poModel.addElement(no.getPONumber());
-                    if(no.getPONumberID() == poNumberId) {
-                        frame.PONumberCombo.setSelectedItem(no);
-                    }
-                }
-                frame.PONumberCombo.setModel(poModel);
-            } else {
-                frame.PONumberCombo.setModel((ComboBoxModel<String>) new DefaultTableModel());//empty
-            }
-        }
         //Populating Addresses for Client
-        DefaultComboBoxModel<String> addModel = new DefaultComboBoxModel<>();
-        
-        
-        for(ClientAddress ca : client.getClientAddresses()) {
-            addModel.addElement(ca.getClientPrintAddress());
-           
-        }
-        frame.clientAddressCombo.setModel(poModel);
-        frame.clientAddressCombo.setSelectedItem(frame.streetAddress.getText());
-        
+        updateEditAddressComboBox(client);
         
         //set details table
-        
-        TableModel details = InvoiceTableModelFactory.getInvoiceDetailTableModel(fullInvoice.getInvoiceItems());
-        frame.jTable3.setModel(details);
-        frame.jScrollPane3.setSize(new Dimension(587, ((frame.jTable3.getRowCount()*frame.jTable3.getRowHeight())+frame.jTable3.getTableHeader().getHeight())));
+        updateEditInvoiceDetailsTable(fullInvoice);
 
         frame.jTextArea1.setText(fullInvoice.getInvoiceFooter().getInvoiceNotes());
         
@@ -174,37 +190,4 @@ public class InvoiceController {
         currentRowCount = frame.jTable3.getRowCount();
         
     }
-    
-    //edit invoice btn
-    /*
-     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-       
-        
-        
-        try {
-            
-            
-            
-    
-    
-            //populates details table
-    
-    
-            jScrollPane3.setSize(new Dimension(587, ((jTable3.getRowCount()*jTable3.getRowHeight())+jTable3.getTableHeader().getHeight())));
-            
-
-    
-    
-          
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    }                                        
-
-    */
-    
-    
 }
