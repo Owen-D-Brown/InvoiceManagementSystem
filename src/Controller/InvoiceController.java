@@ -139,6 +139,7 @@ public class InvoiceController {
         frame.clientAddressCombo.setSelectedItem(frame.streetAddress.getText());
     }
     
+    
     private void updateEditInvoiceDetailsTable(FullInvoiceDTO fullInvoice) {
         TableModel details = InvoiceTableModelFactory.getInvoiceDetailTableModel(fullInvoice.getInvoiceItems());
         frame.jTable3.setModel(details);

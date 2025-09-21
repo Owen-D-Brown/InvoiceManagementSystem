@@ -4,6 +4,7 @@
  */
 package GuiComponents;
 
+import Controller.EditInvoiceController;
 import Controller.InvoiceController;
 import GuiFactories.InvoiceTableModelFactory;
 import dto.FullInvoiceDTO;
@@ -56,6 +57,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import service.implementations.MenuService;
 
 /**
  *
@@ -68,6 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     
     InvoiceController invoiceController = new InvoiceController(this);
+    EditInvoiceController editInvoiceController = new EditInvoiceController(this);
     public MainFrame() {
         initComponents();
  
@@ -120,16 +123,16 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         InvoicePanelHeader = new javax.swing.JPanel();
-        jButton1 = new CircleButton("", Color.orange);
-        jButton2 = new CircleButton("", Color.red);
-        jButton3 = new CircleButton("", Color.green);
-        jButton4 = new javax.swing.JButton();
+        swapToEditView = new CircleButton("", Color.orange);
+        swapToDeleteView = new CircleButton("", Color.red);
+        swapToAddView = new CircleButton("", Color.green);
+        returnToViewInvoiceFromEditBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        cancelDeleteBtn = new javax.swing.JButton();
+        confirmDeleteBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         viewInvoicePanel = new javax.swing.JPanel();
         clientName = new javax.swing.JLabel();
@@ -258,10 +261,10 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        updateInvoiceEditBtn = new javax.swing.JButton();
+        deleteRowEditBtn = new javax.swing.JButton();
+        addRowEditBtn = new javax.swing.JButton();
+        resetChangesEditBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 153, 51));
@@ -322,45 +325,45 @@ public class MainFrame extends javax.swing.JFrame {
         InvoicePanelHeader.setBackground(new java.awt.Color(44, 217, 82));
         InvoicePanelHeader.setLayout(null);
 
-        jButton1.setFocusable(false);
-        jButton1.setPreferredSize(new java.awt.Dimension(60, 60));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        swapToEditView.setFocusable(false);
+        swapToEditView.setPreferredSize(new java.awt.Dimension(60, 60));
+        swapToEditView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                swapToEditViewActionPerformed(evt);
             }
         });
-        InvoicePanelHeader.add(jButton1);
-        jButton1.setBounds(560, 2, 60, 60);
-        jButton1.getAccessibleContext().setAccessibleDescription("");
+        InvoicePanelHeader.add(swapToEditView);
+        swapToEditView.setBounds(560, 2, 60, 60);
+        swapToEditView.getAccessibleContext().setAccessibleDescription("");
 
-        jButton2.setFocusable(false);
-        jButton2.setPreferredSize(new java.awt.Dimension(60, 60));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        swapToDeleteView.setFocusable(false);
+        swapToDeleteView.setPreferredSize(new java.awt.Dimension(60, 60));
+        swapToDeleteView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                swapToDeleteViewActionPerformed(evt);
             }
         });
-        InvoicePanelHeader.add(jButton2);
-        jButton2.setBounds(640, 2, 60, 60);
+        InvoicePanelHeader.add(swapToDeleteView);
+        swapToDeleteView.setBounds(640, 2, 60, 60);
 
-        jButton3.setFocusable(false);
-        jButton3.setPreferredSize(new java.awt.Dimension(60, 60));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        swapToAddView.setFocusable(false);
+        swapToAddView.setPreferredSize(new java.awt.Dimension(60, 60));
+        swapToAddView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                swapToAddViewActionPerformed(evt);
             }
         });
-        InvoicePanelHeader.add(jButton3);
-        jButton3.setBounds(480, 2, 60, 60);
+        InvoicePanelHeader.add(swapToAddView);
+        swapToAddView.setBounds(480, 2, 60, 60);
 
-        jButton4.setText("Return");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        returnToViewInvoiceFromEditBtn.setText("Return");
+        returnToViewInvoiceFromEditBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                returnToViewInvoiceFromEditBtnActionPerformed(evt);
             }
         });
-        InvoicePanelHeader.add(jButton4);
-        jButton4.setBounds(10, 10, 120, 25);
+        InvoicePanelHeader.add(returnToViewInvoiceFromEditBtn);
+        returnToViewInvoiceFromEditBtn.setBounds(10, 10, 120, 25);
 
         jPanel3.setBackground(new java.awt.Color(255, 0, 5));
         jPanel3.setLayout(null);
@@ -376,25 +379,25 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel5.add(jLabel2);
         jLabel2.setBounds(160, 30, 80, 19);
 
-        jButton9.setBackground(new java.awt.Color(102, 255, 0));
-        jButton9.setText("Cancel");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        cancelDeleteBtn.setBackground(new java.awt.Color(102, 255, 0));
+        cancelDeleteBtn.setText("Cancel");
+        cancelDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                cancelDeleteBtnActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton9);
-        jButton9.setBounds(240, 130, 90, 40);
+        jPanel5.add(cancelDeleteBtn);
+        cancelDeleteBtn.setBounds(240, 130, 90, 40);
 
-        jButton10.setBackground(new java.awt.Color(255, 51, 51));
-        jButton10.setText("Confirm");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        confirmDeleteBtn.setBackground(new java.awt.Color(255, 51, 51));
+        confirmDeleteBtn.setText("Confirm");
+        confirmDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                confirmDeleteBtnActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton10);
-        jButton10.setBounds(30, 130, 90, 40);
+        jPanel5.add(confirmDeleteBtn);
+        confirmDeleteBtn.setBounds(30, 130, 90, 40);
 
         jPanel3.add(jPanel5);
         jPanel5.setBounds(170, 180, 378, 224);
@@ -1113,41 +1116,41 @@ public class MainFrame extends javax.swing.JFrame {
         editInvoicePanel.add(jLabel20);
         jLabel20.setBounds(30, 870, 630, 20);
 
-        jButton8.setText("Update Invoice");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        updateInvoiceEditBtn.setText("Update Invoice");
+        updateInvoiceEditBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                updateInvoiceEditBtnActionPerformed(evt);
             }
         });
-        editInvoicePanel.add(jButton8);
-        jButton8.setBounds(550, 710, 120, 25);
+        editInvoicePanel.add(updateInvoiceEditBtn);
+        updateInvoiceEditBtn.setBounds(550, 710, 120, 25);
 
-        jButton6.setText("Delete Row");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        deleteRowEditBtn.setText("Delete Row");
+        deleteRowEditBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                deleteRowEditBtnActionPerformed(evt);
             }
         });
-        editInvoicePanel.add(jButton6);
-        jButton6.setBounds(550, 680, 120, 25);
+        editInvoicePanel.add(deleteRowEditBtn);
+        deleteRowEditBtn.setBounds(550, 680, 120, 25);
 
-        jButton5.setText("Add Row");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        addRowEditBtn.setText("Add Row");
+        addRowEditBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                addRowEditBtnActionPerformed(evt);
             }
         });
-        editInvoicePanel.add(jButton5);
-        jButton5.setBounds(550, 650, 120, 25);
+        editInvoicePanel.add(addRowEditBtn);
+        addRowEditBtn.setBounds(550, 650, 120, 25);
 
-        jButton7.setText("Reset Changes");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        resetChangesEditBtn.setText("Reset Changes");
+        resetChangesEditBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                resetChangesEditBtnActionPerformed(evt);
             }
         });
-        editInvoicePanel.add(jButton7);
-        jButton7.setBounds(550, 330, 120, 25);
+        editInvoicePanel.add(resetChangesEditBtn);
+        resetChangesEditBtn.setBounds(550, 330, 120, 25);
 
         jPanel2.add(editInvoicePanel, "editInvoice");
 
@@ -1194,7 +1197,7 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void swapToEditViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapToEditViewActionPerformed
         
         try {
             invoiceController.swapToEditView(Integer.parseInt(invoiceNo.getText()));
@@ -1204,7 +1207,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         
      
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_swapToEditViewActionPerformed
 
     private void clientAddressComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientAddressComboActionPerformed
         // TODO add your handling code here:
@@ -1212,22 +1215,10 @@ public class MainFrame extends javax.swing.JFrame {
 
 
     private void clientComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientComboActionPerformed
-        /*
-        try {
-            contactCombo.setModel(new DefaultComboBoxModel(GuiApplication.getContacts()));
-            contactCombo.setSelectedItem(0);
-            PONumberCombo.setModel(new DefaultComboBoxModel(GuiApplication.getPONumbers()));
-            if(PONumberCombo.getItemCount() != 0)
-                PONumberCombo.setSelectedIndex(0);
-            clientAddressCombo.setModel(new  DefaultComboBoxModel(getAddresses((String)clientCombo.getSelectedItem())));
-            clientAddressCombo.setRenderer(new AddressRenderer());
-            clientAddressCombo.setSelectedIndex(0);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+ 
     }//GEN-LAST:event_clientComboActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void returnToViewInvoiceFromEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToViewInvoiceFromEditBtnActionPerformed
         CardLayout layout = (CardLayout) jPanel2.getLayout();
         layout.show(jPanel2, "viewInvoice");
         try {
@@ -1236,58 +1227,18 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         jScrollPane3.setSize(new Dimension(587, ((jTable3.getRowCount()*jTable3.getRowHeight())+jTable3.getTableHeader().getHeight())));
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_returnToViewInvoiceFromEditBtnActionPerformed
 
     private void contactComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactComboActionPerformed
-/*    try {
-            PONumberCombo.setModel(new DefaultComboBoxModel(GuiApplication.getPONumbers()));
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(PONumberCombo.getItemCount() > 0)
-            PONumberCombo.setSelectedIndex(0);*/
+
     }//GEN-LAST:event_contactComboActionPerformed
     int currentRowCount;
     ArrayList<String[]> items = new ArrayList<>();
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-      
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        int lastRow = model.getRowCount() - 1;
-        Object cellValue1 = jTable3.getValueAt(lastRow, 0);
-        Object cellValue2 = jTable3.getValueAt(lastRow, 1);
-        Object cellValue3 = jTable3.getValueAt(lastRow, 2);
-        if (cellValue1 != null && !cellValue1.toString().isEmpty()  )  {
-            if(cellValue2 != null &&!cellValue2.toString().isEmpty()) {
-                if(cellValue3 != null && !cellValue3.toString().isEmpty()) {
-                                        if(model.getRowCount() > currentRowCount) {
-                        String[] re = new String[3];
-                        re[0] = jTable3.getValueAt(lastRow, 0).toString();
-                        re[1] = jTable3.getValueAt(lastRow, 1).toString();
-                        re[2] = jTable3.getValueAt(lastRow, 2).toString();
-                        items.add(re);
-                                           
-                    }
-                    //System.out.println(model.getValueAt(lastRow, 0));
-                    model.addRow(new Object[]{"", "", ""});
-                    jScrollPane3.setSize(new Dimension(587, ((jTable3.getRowCount()*jTable3.getRowHeight())+jTable3.getTableHeader().getHeight())));
-                    jTable3.setModel(model);
-                    //System.out.println("firing button "+(jTable3.getRowCount()*jTable3.getRowHeight())+jTable3.getTableHeader().getHeight());
-
-                    editInvoicePanel.repaint();
-                    editInvoicePanel.revalidate();
-
-
-                }
-            }
-
-        } else {
-                         JOptionPane.showMessageDialog(this, "Please ensure you have filled in the previous record before trying to add another.", "Error", JOptionPane.INFORMATION_MESSAGE);
-
-        }
-      
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void addRowEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRowEditBtnActionPerformed
+        editInvoiceController.addRowEditBtnActionPerformed(evt);
+    }//GEN-LAST:event_addRowEditBtnActionPerformed
     
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void deleteRowEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRowEditBtnActionPerformed
         if(jTable3.getRowCount() <= currentRowCount) {
             
         } else if(jTable3.getRowCount() > currentRowCount ) {
@@ -1297,9 +1248,11 @@ public class MainFrame extends javax.swing.JFrame {
         model.removeRow(jTable3.getRowCount()-1);
         jTable3.setModel(model);
         jScrollPane3.setSize(new Dimension(587, ((jTable3.getRowCount()*jTable3.getRowHeight())+jTable3.getTableHeader().getHeight())));
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_deleteRowEditBtnActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    //working here to move the invoice details combo box code out of this
+    MenuService menuService = new MenuService();
+    private void resetChangesEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetChangesEditBtnActionPerformed
  editInvoiceNo.setText(invoiceNo.getText());
         editDueDate.setText(invoiceDueDate.getText());
         editDate.setText(invoiceDate.getText());
@@ -1330,9 +1283,9 @@ public class MainFrame extends javax.swing.JFrame {
             editInvoicePanel.revalidate();
         editInvoicePanel.repaint();
   
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_resetChangesEditBtnActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void updateInvoiceEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateInvoiceEditBtnActionPerformed
 
         try {
             updateInvoiceDetails(editInvoiceNo.getText());//just db - set boxes
@@ -1350,9 +1303,9 @@ public class MainFrame extends javax.swing.JFrame {
         CardLayout layout = (CardLayout) jPanel2.getLayout();//switch to view
         layout.show(jPanel2, "viewInvoice");//switch to view
         //jTable1.getSelectionModel().setSelectionInterval( 1, 1 );
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_updateInvoiceEditBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void swapToDeleteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapToDeleteViewActionPerformed
         CardLayout layout = (CardLayout) jPanel2.getLayout();
         layout.show(jPanel2, "viewInvoice");
         jPanel3.setVisible(true);
@@ -1361,23 +1314,23 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane1.setVisible(false);
         jTable2.setEnabled(false);
         jTable3.setEnabled(false);
-        jButton1.setEnabled(false);
-        jButton2.setEnabled(false);
-        jButton3.setEnabled(false);
-        jButton4.setEnabled(false);
-        jButton5.setEnabled(false);
-        jButton6.setEnabled(false);
-        jButton7.setEnabled(false);
-        jButton8.setEnabled(false);
+        swapToEditView.setEnabled(false);
+        swapToDeleteView.setEnabled(false);
+        swapToAddView.setEnabled(false);
+        returnToViewInvoiceFromEditBtn.setEnabled(false);
+        addRowEditBtn.setEnabled(false);
+        deleteRowEditBtn.setEnabled(false);
+        resetChangesEditBtn.setEnabled(false);
+        updateInvoiceEditBtn.setEnabled(false);
         jTextArea2.setEnabled(false);
         jScrollPane1.setEnabled(false);
         jScrollPane2.setEnabled(false);
         jScrollPane3.setEnabled(false);
    
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_swapToDeleteViewActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void confirmDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmDeleteBtnActionPerformed
         try {
             deleteInvoice(invoiceNo.getText());
             jPanel3.setVisible(false);
@@ -1386,14 +1339,14 @@ public class MainFrame extends javax.swing.JFrame {
             jScrollPane1.setVisible(true);
             jTable2.setEnabled(true);
             jTable3.setEnabled(true);
-            jButton1.setEnabled(true);
-            jButton2.setEnabled(true);
-            jButton3.setEnabled(true);
-            jButton4.setEnabled(true);
-            jButton5.setEnabled(true);
-            jButton6.setEnabled(true);
-            jButton7.setEnabled(true);
-            jButton8.setEnabled(true);
+            swapToEditView.setEnabled(true);
+            swapToDeleteView.setEnabled(true);
+            swapToAddView.setEnabled(true);
+            returnToViewInvoiceFromEditBtn.setEnabled(true);
+            addRowEditBtn.setEnabled(true);
+            deleteRowEditBtn.setEnabled(true);
+            resetChangesEditBtn.setEnabled(true);
+            updateInvoiceEditBtn.setEnabled(true);
             jTextArea2.setEnabled(true);
             jScrollPane1.setEnabled(true);
             jScrollPane2.setEnabled(true);
@@ -1401,33 +1354,33 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_confirmDeleteBtnActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void cancelDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelDeleteBtnActionPerformed
         jPanel3.setVisible(false);
         jTable1.setEnabled(true);
         jTable1.setVisible(true);
         jScrollPane1.setVisible(true);
         jTable2.setEnabled(true);
         jTable3.setEnabled(true);
-        jButton1.setEnabled(true);
-        jButton2.setEnabled(true);
-        jButton3.setEnabled(true);
-        jButton4.setEnabled(true);
-        jButton5.setEnabled(true);
-        jButton6.setEnabled(true);
-        jButton7.setEnabled(true);
-        jButton8.setEnabled(true);
+        swapToEditView.setEnabled(true);
+        swapToDeleteView.setEnabled(true);
+        swapToAddView.setEnabled(true);
+        returnToViewInvoiceFromEditBtn.setEnabled(true);
+        addRowEditBtn.setEnabled(true);
+        deleteRowEditBtn.setEnabled(true);
+        resetChangesEditBtn.setEnabled(true);
+        updateInvoiceEditBtn.setEnabled(true);
         jTextArea2.setEnabled(true);
         jScrollPane1.setEnabled(true);
         jScrollPane2.setEnabled(true);
         jScrollPane3.setEnabled(true);
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_cancelDeleteBtnActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void swapToAddViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapToAddViewActionPerformed
         CardLayout layout = (CardLayout) jPanel2.getLayout();
         layout.show(jPanel2, "addInvoice");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_swapToAddViewActionPerformed
 
     private void addContactComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addContactComboActionPerformed
         // TODO add your handling code here:
@@ -1625,16 +1578,20 @@ public String[] getAddContacts() throws SQLException {
     private javax.swing.JTextField addDueDate;
     private javax.swing.JLabel addInvoiceNo;
     private javax.swing.JPanel addInvoicePanel;
+    private javax.swing.JButton addRowEditBtn;
     public javax.swing.JLabel areaAddress;
+    private javax.swing.JButton cancelDeleteBtn;
     public javax.swing.JComboBox<String> clientAddressCombo;
     public javax.swing.JComboBox<String> clientCombo;
     private javax.swing.JLabel clientLabel;
     private javax.swing.JLabel clientLabel1;
     private javax.swing.JLabel clientLabel2;
     public javax.swing.JLabel clientName;
+    private javax.swing.JButton confirmDeleteBtn;
     public javax.swing.JComboBox<String> contactCombo;
     public javax.swing.JLabel contactNameLabel;
     public javax.swing.JLabel countyAddress;
+    private javax.swing.JButton deleteRowEditBtn;
     public javax.swing.JTextField editDate;
     public javax.swing.JTextField editDueDate;
     public javax.swing.JLabel editInvoiceNo;
@@ -1668,18 +1625,8 @@ public String[] getAddContacts() throws SQLException {
     private javax.swing.JLabel invoicePONoLabel1;
     private javax.swing.JLabel invoicePONoLabel2;
     private javax.swing.JPanel invoicePanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1761,7 +1708,13 @@ public String[] getAddContacts() throws SQLException {
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     public javax.swing.JLabel poNumber;
+    private javax.swing.JButton resetChangesEditBtn;
+    private javax.swing.JButton returnToViewInvoiceFromEditBtn;
     public javax.swing.JLabel streetAddress;
+    private javax.swing.JButton swapToAddView;
+    private javax.swing.JButton swapToDeleteView;
+    private javax.swing.JButton swapToEditView;
+    private javax.swing.JButton updateInvoiceEditBtn;
     private javax.swing.JPanel viewInvoicePanel;
     // End of variables declaration//GEN-END:variables
 

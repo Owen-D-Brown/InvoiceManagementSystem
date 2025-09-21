@@ -75,30 +75,81 @@ public class InvoiceTableModelFactory {
     }*/
     }
     
-    public static class InvoiceDetailTableModel extends AbstractTableModel {
 
-        private final String[] cols = {"Name", "Unit Price", "Quantity", "Line Total"};
-        private final List<InvoiceItemDTO> rows;
-        
-        InvoiceDetailTableModel(List<InvoiceItemDTO> rows) { this.rows = rows; }
-        
-        @Override public int getRowCount() { return rows.size(); }
-        @Override public int getColumnCount() { return cols.length; }
-        @Override public String getColumnName(int c) { return cols[c]; }
-        
-        @Override public Object getValueAt(int r, int c) {
-            var dto = rows.get(r);
-            return switch (c) {
-                case 0 -> dto.getItemName();
-                case 1 -> dto.getUnitPrice();
-                case 2 -> dto.getQuantity();
-                case 3 -> dto.getLineTotal();
-                default -> "";
-            };
-        }
-        
-        
-        
+
+public static class InvoiceDetailTableModel extends AbstractTableModel {
+
+    private final String[] cols = {"Name", "Unit Price", "Quantity", "Line Total"};
+    private final List<InvoiceItemDTO> rows;
+
+    public InvoiceDetailTableModel(List<InvoiceItemDTO> rows) {
+        this.rows = rows;
     }
+
+    @Override
+    public int getRowCount() {
+        return rows.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return cols.length;
+    }
+
+    @Override
+    public String getColumnName(int c) {
+        return cols[c];
+    }
+
+    @Override
+    public Object getValueAt(int r, int c) {
+        InvoiceItemDTO dto = rows.get(r);
+        return switch (c) {
+            case 0 -> dto.getItemName();
+            case 1 -> dto.getUnitPrice();
+            case 2 -> dto.getQuantity();
+            case 3 -> dto.getLineTotal();
+            default -> "";
+        };
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int col) {
+        return col != 3;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int row, int col) {
+        InvoiceItemDTO dto = rows.get(row);
+        switch (col) {
+            case 0 -> dto.setItemName((String) aValue);
+            case 1 -> dto.setUnitPrice((float) Double.parseDouble(aValue.toString()));
+            case 2 -> dto.setQuantity(Integer.parseInt(aValue.toString()));
+        }
+        fireTableRowsUpdated(row, row);
+    }
+
+    public void addItem(InvoiceItemDTO dto) {
+        int idx = rows.size();
+        rows.add(dto);
+        fireTableRowsInserted(idx, idx);
+    }
+
+    public void removeRow(int row) {
+        if (row >= 0 && row < rows.size()) {
+            rows.remove(row);
+            fireTableRowsDeleted(row, row);
+        }
+    }
+
+    public InvoiceItemDTO getRow(int row) {
+        return rows.get(row);
+    }
+
+    public List<InvoiceItemDTO> getAllRows() {
+        return rows;
+    }
+}
+
     
 }

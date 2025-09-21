@@ -80,7 +80,7 @@ try (
     }
 
     @Override
-    public List<MenuItem> getAll() {
+    public ArrayList<MenuItem> getAll() {
 try (
             java.sql.Connection conn = DatabasePipeline.openConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Menu")
